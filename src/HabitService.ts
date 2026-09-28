@@ -1,4 +1,4 @@
-interface Habit {
+export interface Habit {
     habitId: number
     name: string
     frequency: number
@@ -6,14 +6,14 @@ interface Habit {
     target_measure: string
 }
 
-interface HabitEntry {
+export interface HabitEntry {
     habitId: number
     date: Date
     completed: boolean
     type: number
 }
 
-class HabitService {
+export class HabitService {
     private habits: Map<number, Habit>
 
     constructor(habits_list: Map<number, Habit> = new Map<number, Habit>) {
