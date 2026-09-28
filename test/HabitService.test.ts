@@ -1,16 +1,48 @@
-import {describe, it, expect, beforeEach} from "vitest"
-import {HabitService} from "../src/HabitService";
+import {describe, it, expect} from "vitest"
+import {Habit, HabitService} from "../src/HabitService";
 
 describe("HabitService", () => {
-	let service: HabitService;
+	const service: HabitService = new HabitService;
+    const habit1: Habit = {
+        habitId: 1,
+        name: "Leer",
+        frequency: 5,
+        target: 30,
+        target_measure: "minutos"
+    }
+    const modifiedhabit1: Habit = {
+        habitId: 1,
+        name: "Leer",
+        frequency: 3,
+        target: 60,
+        target_measure: "minutos"
+    }
+    
+    const habit2: Habit = {
+        habitId: 2,
+        name: "Entrenar",
+        frequency: 5,
+        target: 4,
+        target_measure: "días en semana"
+    }
 
-	beforeEach(() => {
-		service = new HabitService();
-	});
+	it("inserts an habit", () => {
+        expect(service.insertHabit(habit1)).toBe(true)
+        expect(service.insertHabit(habit2)).toBe(true)
+        expect(service.insertHabit(habit1)).toBe(false)
 
-	it("starts with no habits", () => {});
+    });
 
-	it("creates and returns a habit", () => {});
+	it("deletes an habit", () => {
+        expect(service.eraseHabit(1)).toBe(true)
+        expect(service.eraseHabit(2)).toBe(true)
+        expect(service.eraseHabit(1)).toBe(false)
 
-	it("deletes a habit", () => {});
+    });
+
+    it ("modifies an habit", () => {
+        service.insertHabit(habit1)
+        expect(service.modifyHabit(1, habit2)).toBe(false)
+        expect(service.modifyHabit(1, modifiedhabit1)).toBe(true)
+    });
 });
