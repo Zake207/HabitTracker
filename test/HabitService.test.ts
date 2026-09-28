@@ -8,14 +8,14 @@ describe("HabitService", () => {
         name: "Leer",
         frequency: 5,
         target: 30,
-        target_measure: "minutos"
+        target_measure: "minutes"
     }
     const modifiedhabit1: Habit = {
         habitId: 1,
         name: "Leer",
         frequency: 3,
         target: 60,
-        target_measure: "minutos"
+        target_measure: "minutes"
     }
     
     const habit2: Habit = {
@@ -23,7 +23,7 @@ describe("HabitService", () => {
         name: "Entrenar",
         frequency: 5,
         target: 4,
-        target_measure: "días en semana"
+        target_measure: "times"
     }
 
 	it("inserts an habit", () => {

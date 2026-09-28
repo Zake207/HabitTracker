@@ -1,9 +1,11 @@
+export type measure_eng = "pages" | "minutes" | "times" | "amount"
+
 export interface Habit {
     habitId: number
     name: string
     frequency: number
     target: number
-    target_measure: string
+    target_measure: measure_eng
 }
 
 export interface HabitEntry {
@@ -13,11 +15,41 @@ export interface HabitEntry {
     type: number
 }
 
+function isValidTargetMeasure(value: string): boolean {
+    return (
+        value === "amount" ||
+        value === "minutes" ||
+        value === "pages" ||
+        value === "times"
+    );
+}
+
 export class HabitService {
     private habits: Map<number, Habit>
 
     constructor(habits_list: Map<number, Habit> = new Map<number, Habit>) {
         this.habits = habits_list
+    }
+
+    validateHabit(habit: Habit) : boolean {
+        // Frequency
+        const f_check = typeof habit.frequency === "number"
+        && Number.isInteger(habit.frequency)
+        && habit.frequency > 0
+
+        const t_check = typeof habit.target === "number"
+        && Number.isInteger(habit.target)
+        && habit.target > 0
+
+        const n_check = typeof habit.name === "string"
+        && habit.name.length > 0
+
+        const tm_check = isValidTargetMeasure(habit.target_measure)
+
+        if (f_check && t_check && n_check && typeof tm_check) {
+            return true
+        }
+        return false
     }
 
     insertHabit(habit: Habit) : boolean {
