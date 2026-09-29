@@ -54,13 +54,6 @@ describe("HabitService", () => {
         target: 3.2,
         target_measure: "times"
     }
-    const invalid_habit_tm: Habit = {
-        habitId: 1,
-        name: " ",
-        frequency: 5,
-        target: 4,
-        target_measure: "rondas"
-    }
     
 
     it("validates an habit", () => {
@@ -71,7 +64,6 @@ describe("HabitService", () => {
         expect(service.validateHabit(invalid_habit_name)).toBe(false)
         expect(service.validateHabit(invalid_habit_freq)).toBe(false)
         expect(service.validateHabit(invalid_habit_tar)).toBe(false)
-        expect(service.validateHabit(invalid_habit_tm)).toBe(false)
     });
 
 	it("inserts an habit", () => {

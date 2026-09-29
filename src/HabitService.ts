@@ -28,6 +28,11 @@ export class HabitService {
     private habits: Map<number, Habit>
 
     constructor(habits_list: Map<number, Habit> = new Map<number, Habit>) {
+        habits_list.forEach((habit) => {
+            if (!this.validateHabit(habit)) {
+                return undefined
+            }
+        })
         this.habits = habits_list
     }
 
