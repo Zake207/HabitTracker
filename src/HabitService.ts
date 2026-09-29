@@ -25,7 +25,7 @@ function isValidTargetMeasure(value: string): boolean {
 }
 
 export class HabitService {
-    private habits: Map<number, Habit>
+    private habits: Map<number, Habit> = new Map<number, Habit>
 
     constructor(habits_list: Map<number, Habit> = new Map<number, Habit>) {
         habits_list.forEach((habit) => {
@@ -40,7 +40,6 @@ export class HabitService {
         const i_check = typeof habit.habitId === "number"
         && Number.isInteger(habit.habitId)
         && habit.habitId > 0
-        && !this.habits.has(habit.habitId)
         
         const f_check = typeof habit.frequency === "number"
         && Number.isInteger(habit.frequency)
@@ -55,14 +54,15 @@ export class HabitService {
 
         const tm_check = isValidTargetMeasure(habit.target_measure)
 
-        if (i_check && f_check && t_check && n_check && typeof tm_check) {
+        if (i_check && f_check && t_check && n_check && tm_check) {
             return true
         }
         return false
     }
 
     insertHabit(habit: Habit) : boolean {
-        if(!this.searchHabit(habit.habitId).found) {
+
+        if(this.validateHabit(habit) && !this.searchHabit(habit.habitId).found) {
             this.habits.set(habit.habitId, habit)
             return true
         }
@@ -78,7 +78,9 @@ export class HabitService {
     }
 
     modifyHabit(habit_id: number, changed_habit: Habit) : boolean {
-        if(this.searchHabit(habit_id).found && changed_habit.habitId == habit_id) {
+        if(this.searchHabit(habit_id).found 
+        && changed_habit.habitId == habit_id
+        && this.validateHabit(changed_habit)) {
             this.habits.set(habit_id, changed_habit)
             return true
         }
