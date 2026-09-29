@@ -10,7 +10,7 @@ describe("HabitService", () => {
         target: 30,
         target_measure: "minutes"
     }
-    const modifiedhabit1: Habit = {
+    const modified_habit1: Habit = {
         habitId: 1,
         name: "Leer",
         frequency: 3,
@@ -25,6 +25,54 @@ describe("HabitService", () => {
         target: 4,
         target_measure: "times"
     }
+
+    const invalid_habit_id: Habit = {
+        habitId: 0,
+        name: "Entrenar",
+        frequency: 5,
+        target: 4,
+        target_measure: "times"
+    }
+    const invalid_habit_name: Habit = {
+        habitId: 1,
+        name: " ",
+        frequency: 5,
+        target: 4,
+        target_measure: "times"
+    }
+    const invalid_habit_freq: Habit = {
+        habitId: 1,
+        name: " ",
+        frequency: -4,
+        target: 4,
+        target_measure: "times"
+    }
+    const invalid_habit_tar: Habit = {
+        habitId: 1,
+        name: " ",
+        frequency: 5,
+        target: 3.2,
+        target_measure: "times"
+    }
+    const invalid_habit_tm: Habit = {
+        habitId: 1,
+        name: " ",
+        frequency: 5,
+        target: 4,
+        target_measure: "rondas"
+    }
+    
+
+    it("validates an habit", () => {
+        expect(service.validateHabit(habit1)).toBe(true)
+        expect(service.validateHabit(habit2)).toBe(true)
+
+        expect(service.validateHabit(invalid_habit_id)).toBe(false)
+        expect(service.validateHabit(invalid_habit_name)).toBe(false)
+        expect(service.validateHabit(invalid_habit_freq)).toBe(false)
+        expect(service.validateHabit(invalid_habit_tar)).toBe(false)
+        expect(service.validateHabit(invalid_habit_tm)).toBe(false)
+    });
 
 	it("inserts an habit", () => {
         expect(service.insertHabit(habit1)).toBe(true)
@@ -43,6 +91,6 @@ describe("HabitService", () => {
     it ("modifies an habit", () => {
         service.insertHabit(habit1)
         expect(service.modifyHabit(1, habit2)).toBe(false)
-        expect(service.modifyHabit(1, modifiedhabit1)).toBe(true)
+        expect(service.modifyHabit(1, modified_habit1)).toBe(true)
     });
 });

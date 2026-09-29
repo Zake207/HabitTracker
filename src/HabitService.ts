@@ -32,7 +32,11 @@ export class HabitService {
     }
 
     validateHabit(habit: Habit) : boolean {
-        // Frequency
+        const i_check = typeof habit.habitId === "number"
+        && Number.isInteger(habit.habitId)
+        && habit.habitId > 0
+        && !this.habits.has(habit.habitId)
+        
         const f_check = typeof habit.frequency === "number"
         && Number.isInteger(habit.frequency)
         && habit.frequency > 0
@@ -42,11 +46,11 @@ export class HabitService {
         && habit.target > 0
 
         const n_check = typeof habit.name === "string"
-        && habit.name.length > 0
+        && habit.name.trim().length > 0
 
         const tm_check = isValidTargetMeasure(habit.target_measure)
 
-        if (f_check && t_check && n_check && typeof tm_check) {
+        if (i_check && f_check && t_check && n_check && typeof tm_check) {
             return true
         }
         return false
