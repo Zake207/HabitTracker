@@ -8,13 +8,6 @@ export interface Habit {
     target_measure: measure_eng
 }
 
-export interface HabitEntry {
-    habitId: number
-    date: Date
-    completed: boolean
-    type: number
-}
-
 function isValidTargetMeasure(value: string): boolean {
     return (
         value === "amount" ||
