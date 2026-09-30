@@ -25,14 +25,14 @@ export class HabitRegisterService {
     private habit_register: Map<number,Array<HabitRegister>> = new Map<number, Array<HabitRegister>>()
 
     constructor(habit_resgisters : Map<number,Array<HabitRegister>> = new Map<number,[]>) {
+        this.habit_register = habit_resgisters
         habit_resgisters.forEach((registers, id) => {
             registers.forEach((register) => {
                 if (!this.validateRegister(register)) {
-                    return false
+                    throw new Error("Invalid HabitRegister");
                 }
             })
         })
-        this.habit_register = habit_resgisters
     }
 
     validateRegister(register: HabitRegister) : boolean {
@@ -56,23 +56,60 @@ export class HabitRegisterService {
     }
     
     insertRegister(register: HabitRegister) : boolean {
-        // validar, buscar que no exista, luego insertar en el id correspondiente
+        if (this.validateRegister(register)
+        && !this.searchRegister(register.habitId, register.date).found) {
+            this.habit_register.get(register.habitId)!.push(register)
+            return true
+        }
         return false 
     }
     
-    modifyRegister(habit_id: number, date: Date) : boolean {
-        // para un habito, modifica el de una fecha en concreto (por lo que la fecha queda intacta)
+    modifyRegister(new_register: HabitRegister) : boolean {
+        const register = this.searchRegister(new_register.habitId,new_register.date)
+        if(this.validateRegister(new_register)
+        && register.found) {
+            this.habit_register.get(new_register.habitId)![register.index] = new_register
+            return true
+        }
         return false 
     }
 
     eraseRegister(habit_id: number, date: Date) : boolean {
-        // para un habito borra el registro de un dia concreto 
+        const register_to_erase = this.searchRegister(habit_id, date)
+        if (register_to_erase.found) {
+            this.habit_register.get(habit_id)!.splice(register_to_erase.index, 1)
+            return true
+        } 
         return false 
     }
 
-    searchRegister(habit_id: number, date: Date) : {found: boolean, register: HabitRegister | undefined} { 
-        // dado un habito, se le pasa una fecha y encuentra en el array la unica instancia que debe de haber
-        return {found: false, register: undefined} 
+    searchRegister(habit_id: number,date: Date) : 
+    { found: boolean, register: HabitRegister | undefined, index: number } {
+        const registers = this.habit_register.get(habit_id);
+        if (registers === undefined) {
+            return {
+                found: false,
+                register: undefined,
+                index: -1
+            };
+        }
+        const index = registers.findIndex(
+            register =>
+                register.date.getFullYear() === date.getFullYear() &&
+                register.date.getMonth() === date.getMonth() &&
+                register.date.getDate() === date.getDate()
+        );
+        if (index === -1) {
+            return {
+                found: false,
+                register: undefined,
+                index: -1
+            };
+        }
+        return {
+            found: true,
+            register: registers[index],
+            index: index
+        };
     }
-
 }
