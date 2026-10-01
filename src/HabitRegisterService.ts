@@ -197,4 +197,20 @@ export class HabitRegisterService {
             index: index
         };
     }
+
+    addEntry(habit_id: number) : boolean {
+        if (!this.habit_register.has(habit_id)) {
+            this.habit_register.set(habit_id, new Array<HabitRegister>)
+            return true
+        }
+        return false
+    }
+
+    dropEntry(habit_id: number) : boolean {
+        if (this.habit_register.has(habit_id)) {
+            this.habit_register.delete(habit_id)
+            return true
+        }
+        return false
+    }
 }
