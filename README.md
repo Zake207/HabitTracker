@@ -1,6 +1,9 @@
 # Habit Tracker
+
 ## Fase 0
+
 ### Elecciones técnicas
+
 #### TypeScript
 
 TypeScript se utilizará como lenguaje principal con el objetivo de desarrollar el proyecto mientras se profundiza en:
@@ -12,6 +15,7 @@ Uniones y tipos opcionales.
 Funciones tipadas.
 Control de errores.
 Diseño y modelado del dominio.
+
 #### Vite
 
 Se seleccionó Vite como herramienta de desarrollo por proporcionar:
@@ -21,6 +25,7 @@ Recarga automática.
 Integración con TypeScript.
 Sistema de build para producción.
 Configuración inicial reducida.
+
 #### Vanilla TypeScript
 
 Se seleccionó Vanilla + TypeScript en lugar de un framework como React o Vue.
@@ -44,9 +49,9 @@ Se adoptó fnm (Fast Node Manager) como gestor de versiones de Node.js.
 La arquitectura resultante es:
 
 fnm
- └── Node.js
-      └── npm
-           └── proyecto TypeScript
+└── Node.js
+└── npm
+└── proyecto TypeScript
 
 Esta configuración permite cambiar de versión de Node.js según las necesidades de cada proyecto.
 
