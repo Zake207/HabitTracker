@@ -29,24 +29,23 @@ export class HabitTrackerService {
             return false 
     }
 
-    eraseTrackedHabit(habit_id: number, date: Date, completed: boolean, realized: number) : boolean {
+    eraseTrackedHabit(habit_id: number) : boolean {
+        if (this.registers.dropEntry(habit_id)) {
+            if (this.habits.eraseHabit(habit_id)) {
+                return true                
+            }
+        }
+        return false
+    }
+
+    addRegister(habit_id: number, date: Date, completed: boolean, realized: number) : boolean {
         const new_register: HabitRegister = { 
             habitId: habit_id, 
             date: date, 
             completed: completed, 
             realized: realized 
         } 
-        if (this.registers.insertRegister(new_register)) { 
-            return true 
-        } 
-        return false
-    }
-
-    addRegister(register: HabitRegister) {
-        if (this.registers.insertRegister(register)) {
-            return true
-        }
-        return false
+        return this.registers.insertRegister(new_register)
     }
     
     modifyTrackedHabit(habit_id: number, new_name: string, new_frequency: number,
@@ -68,11 +67,11 @@ export class HabitTrackerService {
             return false
     }
 
-    getTrackedHabits() : HabitService {
-        return this.habits
-    }
+    // getTrackedHabits() : HabitService {
+    //     return this.habits
+    // }
 
-    getRegisters() : HabitRegisterService {
-        return this.registers
-    }
+    // getRegisters() : HabitRegisterService {
+    //     return this.registers
+    // }
 }
