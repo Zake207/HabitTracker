@@ -1,5 +1,13 @@
+import HabitList from './components/HabitList.tsx';
+
 function App() {
-  return <h1>Habit Tracker</h1>
+  return (
+    <main>
+      <h1>Habit Tracker</h1>
+
+      <HabitList />
+    </main>
+  );
 }
 
-export default App
+export default App;
