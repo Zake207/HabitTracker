@@ -6,13 +6,6 @@ interface HabitListProps {
   service: HabitTrackerService;
 }
 
-// Falta: Reiniciar formularios cada vez que se completen 
-//        para no mostrar lo anterior al iniciar uno nuevo.
-
-//        Al modificar un habito el formulario debe reflejar
-//        los valores ya existentes del habito para evitar 
-//        perdida de tiempo al usuario.
-
 //        Añadir un menu donde se pueda navegar entre las
 //        funcionalidades de la aplicación
 
@@ -35,19 +28,40 @@ function HabitList({ service }: HabitListProps) {
   const [n_tar, setNewTar] = useState(0)
   const [n_tarm, setNewTarm] = useState<measure_eng>('times')
 
+  function resetFormInsertHabit() {
+    setId(0);
+    setName('');
+    setFreq(0);
+    setTar(0);
+    setTarm('times');
+    setShowFormInsertHabit(true)
+  }
+  function setFormModifyHabit() {
+    setNewName(selectedHabit.name)
+    setNewFreq(selectedHabit.frequency)
+    setNewTar(selectedHabit.target)
+    setNewTarm(selectedHabit.target_measure)
+    setShowFormModifyHabit(true)
+  }
+
   function handleInsertHabit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (!service.insertTrackedHabit(id,name,freq,tar,tarm)) {
+      resetFormInsertHabit()
       setErrorInsertHabit(true)
       setShowFormInsertHabit(false)
       return
     }
-    setHabits(service.getTrackedHabits());
+    setHabits(service.getTrackedHabits())
+    resetFormInsertHabit()
     setShowFormInsertHabit(false)  
   }
 
   function handleModifyHabit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault() 
+    if (typeof selectedHabit == null) {
+      return
+    }
     if(!service.modifyTrackedHabit(selectedHabit.habitId,n_name, n_freq, n_tar, n_tarm)) {
       setErrorModifyHabit(true)
       setShowFormModifyHabit(false)
@@ -57,12 +71,11 @@ function HabitList({ service }: HabitListProps) {
     setSelectedHabit(null)
     setShowFormModifyHabit(false)
   }
+
   function handleDeleteHabit() {
-    if (!selectedHabit) {
-      return;
-    }
+    if (!selectedHabit) { return }
     const confirmed = window.confirm(
-      `¿Estás seguro de que quieres eliminar el hábito "${selectedHabit.name}"?`
+      `Deleting habit "${selectedHabit.name}"?`
     );
     if (!confirmed) {
       return;
@@ -71,6 +84,7 @@ function HabitList({ service }: HabitListProps) {
     setHabits(service.getTrackedHabits());
     setSelectedHabit(null);
   }
+
   return (
     <section>
       <h2>My Habits</h2>
@@ -110,7 +124,7 @@ function HabitList({ service }: HabitListProps) {
             <h2>{selectedHabit.name}</h2>
             <p> Frequency: {selectedHabit.frequency} </p>
             <p>Objetivo: {selectedHabit.target}{' '}{selectedHabit.target_measure}</p>
-        <button onClick={() => setShowFormModifyHabit(true)}>
+        <button onClick={() => setFormModifyHabit()}>
             Modify
         </button>
           {showModifyHabit && (
