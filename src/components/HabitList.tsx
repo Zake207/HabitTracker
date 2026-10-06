@@ -44,7 +44,7 @@ function HabitList({ service }: HabitListProps) {
             Name <input value={name} onChange={(event) => setName(event.target.value)}/><br />
             Frequency <input value={freq} onChange={(event) => setFreq(Number(event.target.value))}/><br />
             Target <input value={tar} onChange={(event) => setTar(Number(event.target.value))}/><br />
-            Target Measure <input value={tarm} onChange={(event) => setTarm(event.target.value)}/><br />
+            Target Measure <input value={tarm} onChange={(event) => setTarm(event.target.value as measure_eng)}/><br />
             <button type="submit"> Añadir </button>
         </form>
       )}
