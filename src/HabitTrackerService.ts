@@ -5,7 +5,7 @@ export class HabitTrackerService {
   private habits = new HabitService()
   private registers = new HabitRegisterService()
 
-  constructor(habit_list: Map<number, Habit>) {
+  constructor(habit_list: Map<number, Habit> = new Map<number, Habit>) {
     this.habits = new HabitService(habit_list)
     habit_list.forEach((habit) => {
       this.registers.addEntry(habit.habitId)
@@ -82,9 +82,9 @@ export class HabitTrackerService {
     return false
   }
 
-  // getTrackedHabits() : HabitService {
-  //     return this.habits
-  // }
+  getTrackedHabits(): Array<Habit> {
+    return Array.from(this.habits.getHabits().values());
+  }
 
   // getRegisters() : HabitRegisterService {
   //     return this.registers

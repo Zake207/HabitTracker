@@ -155,6 +155,10 @@ export class HabitService {
       return { found: true, habit: this.habits.get(habit_id) }
     }
   }
+
+  getHabits() :  Map<number, Habit> {
+    return this.habits
+  }
 }
 
 //////////////////////////////////////////////////////////////////
