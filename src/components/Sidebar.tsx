@@ -1,8 +1,8 @@
-import type { View } from '../App.tsx';
+import type { View } from '../App.tsx'
 
 export interface SidebarProps {
-  view: View;
-  setView: (view: View) => void;
+  view: View
+  setView: (view: View) => void
 }
 
 export function Sidebar({ view, setView }: SidebarProps) {
@@ -35,7 +35,7 @@ export function Sidebar({ view, setView }: SidebarProps) {
         </button>
       </nav>
     </aside>
-  );
+  )
 }
 
-export default Sidebar;
+export default Sidebar

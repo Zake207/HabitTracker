@@ -210,5 +210,8 @@ export class HabitRegisterService {
     }
     return false
   }
-  
+
+  getRegisters(): Map<number,Array<HabitRegister>> {
+    return this.habit_register
+  }
 }

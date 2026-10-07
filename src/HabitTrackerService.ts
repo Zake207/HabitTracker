@@ -5,7 +5,7 @@ export class HabitTrackerService {
   private habits = new HabitService()
   private registers = new HabitRegisterService()
 
-  constructor(habit_list: Map<number, Habit> = new Map<number, Habit>) {
+  constructor(habit_list: Map<number, Habit> = new Map<number, Habit>()) {
     this.habits = new HabitService(habit_list)
     this.loadTrackedHabits()
     habit_list.forEach((habit) => {
@@ -89,29 +89,54 @@ export class HabitTrackerService {
   }
 
   getTrackedHabits(): Array<Habit> {
-    return Array.from(this.habits.getHabits().values());
+    return Array.from(this.habits.getHabits().values())
   }
 
-  // getRegisters() : HabitRegisterService {
-  //     return this.registers
-  // }
+  getTodayTrackedRegister(habit_id: number): HabitRegister | undefined{
+    const today = new Date()
+    if (this.registers.searchRegister(habit_id, today).found) {
+      return this.registers.searchRegister(habit_id, today).register
+    }
+  }
+
+  /**
+ * @description
+ * Obtains all habit registrations corresponding to the current calendar day.
+ *
+ * @returns {HabitRegister[]} Habit registrations for the current day.
+ */
+getTrackedRegisters(): HabitRegister[] {
+    const today = new Date()
+    const registers: HabitRegister[] = []
+
+    this.registers.getRegisters().forEach((habitRegisters) => {
+        habitRegisters.forEach((register) => {
+            if (
+                register.date.getFullYear() === today.getFullYear() &&
+                register.date.getMonth() === today.getMonth() &&
+                register.date.getDate() === today.getDate()
+            ) {
+                registers.push(register)
+            }
+        })
+    })
+
+    return registers
+}
 
   private saveTrackedHabits(): void {
-    const habits = Array.from(this.habits.getHabits().values());
+    const habits = Array.from(this.habits.getHabits().values())
     localStorage.setItem('habits', JSON.stringify(habits))
   }
 
   private loadTrackedHabits(): void {
-    const data = localStorage.getItem('habits');
+    const data = localStorage.getItem('habits')
     if (data === null) {
-        return;
+      return
     }
-    const habits: Habit[] = JSON.parse(data);
-    this.habits = new HabitService(new Map<number, Habit> (
-        habits.map((habit) => [
-            habit.habitId,
-            habit,
-        ])),
+    const habits: Habit[] = JSON.parse(data)
+    this.habits = new HabitService(
+      new Map<number, Habit>(habits.map((habit) => [habit.habitId, habit]))
     )
   }
 }

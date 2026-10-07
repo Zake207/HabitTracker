@@ -1,7 +1,8 @@
 /**
  * Units used to measure a habit's target.
  */
-export type measure_eng = 'pages' | 'minutes' | 'times' | 'amount' | 'hours' | 'L' | 'Km'
+export type measure_eng =
+  'pages' | 'minutes' | 'times' | 'amount' | 'hours' | 'L' | 'Km'
 
 /**
  * Represents a habit managed by {@link HabitService}.
@@ -159,7 +160,7 @@ export class HabitService {
     }
   }
 
-  getHabits() :  Map<number, Habit> {
+  getHabits(): Map<number, Habit> {
     return this.habits
   }
 }
