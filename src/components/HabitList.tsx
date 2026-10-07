@@ -175,7 +175,7 @@ function HabitList({ service }: HabitListProps) {
                 type="text"
                 value={name}
                 onChange={(event) =>
-                  setName(event.target.value)
+                  setName(event.target.value.trim())
                 }
               />
             </div>

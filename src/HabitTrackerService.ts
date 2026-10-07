@@ -7,10 +7,10 @@ export class HabitTrackerService {
 
   constructor(habit_list: Map<number, Habit> = new Map<number, Habit>) {
     this.habits = new HabitService(habit_list)
+    this.loadTrackedHabits()
     habit_list.forEach((habit) => {
       this.registers.addEntry(habit.habitId)
     })
-    this.loadTrackedHabits()
     // Falta tratar el caso en el que no se inicializa vacio
     // por lo que hay que ver que pasa entre el localStorage
     // y el map que se pasa como parámetro
@@ -40,11 +40,10 @@ export class HabitTrackerService {
   }
 
   eraseTrackedHabit(habit_id: number): boolean {
-    if (this.registers.dropEntry(habit_id)) {
-      if (this.habits.eraseHabit(habit_id)) {
-        this.saveTrackedHabits()
-        return true
-      }
+    this.registers.dropEntry(habit_id)
+    if (this.habits.eraseHabit(habit_id)) {
+      this.saveTrackedHabits()
+      return true
     }
     return false
   }

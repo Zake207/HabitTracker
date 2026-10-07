@@ -13,18 +13,10 @@ export function Sidebar({ view, setView }: SidebarProps) {
       <nav className="sidebar-nav">
         <button
           className="sidebar-button"
-          onClick={() => setView('habits')}
-          disabled={view === 'habits'}
-        >
-          Hábitos
-        </button>
-
-        <button
-          className="sidebar-button"
           onClick={() => setView('registers')}
           disabled={view === 'registers'}
         >
-          Registros
+          Registers
         </button>
 
         <button
@@ -32,7 +24,14 @@ export function Sidebar({ view, setView }: SidebarProps) {
           onClick={() => setView('metrics')}
           disabled={view === 'metrics'}
         >
-          Métricas
+          Metrics
+        </button>
+        <button
+          className="sidebar-button"
+          onClick={() => setView('habits')}
+          disabled={view === 'habits'}
+        >
+          Habit
         </button>
       </nav>
     </aside>

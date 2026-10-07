@@ -31,7 +31,10 @@ function isValidTargetMeasure(value: string): boolean {
     value === 'amount' ||
     value === 'minutes' ||
     value === 'pages' ||
-    value === 'times'
+    value === 'times' ||
+    value === 'L' ||
+    value === 'hours' ||
+    value === 'Km'
   )
 }
 
@@ -80,7 +83,7 @@ export class HabitService {
 
     const t_check =
       typeof habit.target === 'number' &&
-      Number.isInteger(habit.target) &&
+      Number.isFinite(habit.target) &&
       habit.target > 0
 
     const n_check =
