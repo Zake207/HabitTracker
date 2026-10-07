@@ -10,6 +10,9 @@ interface HabitRegisterProps {
 
 export function HabitRegister({ service }: HabitRegisterProps) {
     const today = new Date();
+    const [habits, setHabits] = useState<Habit[]>(
+        service.getTrackedHabits(),
+      );
 
     const formattedDate = today.toLocaleDateString("es-ES", {
         weekday: "long",
@@ -22,6 +25,20 @@ export function HabitRegister({ service }: HabitRegisterProps) {
             <header>
                 <h2>{formattedDate}</h2>
             </header>
+            <ul className="habits">
+        {habits.map((habit) => (
+          <li>
+            <div>
+              <span>
+                {habit.name}
+                <button>
+                Registro
+            </button>
+              </span>
+            </div>
+          </li>
+        ))}
+      </ul>
         </section>
     )
 }
