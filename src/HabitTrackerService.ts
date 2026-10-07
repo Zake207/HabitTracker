@@ -89,4 +89,23 @@ export class HabitTrackerService {
   // getRegisters() : HabitRegisterService {
   //     return this.registers
   // }
+
+  private saveTrackedHabits(): void {
+    const habits = Array.from(this.habits.getHabits().values());
+    localStorage.setItem('habits', JSON.stringify(habits))
+  }
+
+  private loadTrackedHabits(): void {
+    const data = localStorage.getItem('habits');
+    if (data === null) {
+        return;
+    }
+    const habits: Habit[] = JSON.parse(data);
+    this.habits = new HabitService(new Map<number, Habit> (
+        habits.map((habit) => [
+            habit.habitId,
+            habit,
+        ])),
+    )
+  }
 }
