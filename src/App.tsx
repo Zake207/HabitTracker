@@ -11,7 +11,7 @@ function App() {
   const [view, setView] = useState<View>('habits');
   
   return (
-    <main>
+    <main className="app">
             <Sidebar
                 view={view}
                 setView={setView}

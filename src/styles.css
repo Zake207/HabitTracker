@@ -1,0 +1,330 @@
+/* =========================================================
+   Global
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f6f8;
+  color: #222;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* =========================================================
+   Application layout
+   ========================================================= */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+}
+
+/* =========================================================
+   Sidebar
+   ========================================================= */
+
+.sidebar {
+  width: 240px;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #ffffff;
+  border-right: 1px solid #ddd;
+}
+
+.sidebar-title {
+  margin: 0 0 2rem;
+  font-size: 1.5rem;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar-button {
+  padding: 0.75rem 1rem;
+
+  border: none;
+  border-radius: 6px;
+
+  background: transparent;
+
+  text-align: left;
+}
+
+.sidebar-button:hover:not(:disabled) {
+  background: #f0f0f0;
+}
+
+.sidebar-button:disabled {
+  background: #e9ecef;
+  font-weight: bold;
+  cursor: default;
+}
+
+/* =========================================================
+   Habit list
+   ========================================================= */
+
+.habit-list {
+  flex: 1;
+  padding: 2.5rem;
+  max-width: 1000px;
+}
+
+.habit-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 2rem;
+}
+
+.habit-list-title {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.habits {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.habit-item {
+  padding: 1rem 1.25rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.habit-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.habit-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.habit-item-name {
+  font-weight: bold;
+}
+
+.habit-item-id {
+  font-size: 0.8rem;
+  color: #777;
+}
+
+.habit-item-arrow {
+  font-size: 1.25rem;
+  color: #777;
+}
+
+/* =========================================================
+   Buttons
+   ========================================================= */
+
+.primary-button,
+.secondary-button,
+.danger-button {
+  padding: 0.65rem 1rem;
+
+  border-radius: 6px;
+  border: 1px solid transparent;
+}
+
+.primary-button {
+  background: #222;
+  color: #ffffff;
+}
+
+.primary-button:hover {
+  background: #444;
+}
+
+.secondary-button {
+  background: #ffffff;
+  color: #222;
+  border-color: #ccc;
+}
+
+.secondary-button:hover {
+  background: #f0f0f0;
+}
+
+.danger-button {
+  background: #ffffff;
+  color: #c0392b;
+  border-color: #c0392b;
+}
+
+.danger-button:hover {
+  background: #c0392b;
+  color: #ffffff;
+}
+
+/* =========================================================
+   Modals
+   ========================================================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1rem;
+
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.modal,
+.error-modal {
+  width: 100%;
+  max-width: 500px;
+
+  padding: 2rem;
+
+  background: #ffffff;
+  border-radius: 10px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.modal-title {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+/* =========================================================
+   Forms
+   ========================================================= */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+
+  border: 1px solid #ccc;
+  border-radius: 6px;
+
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: #555;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+
+  margin-top: 1.5rem;
+}
+
+.modify-form {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+
+  border-top: 1px solid #ddd;
+}
+
+.modify-form h3 {
+  margin-top: 0;
+}
+
+/* =========================================================
+   Habit details
+   ========================================================= */
+
+.habit-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.habit-detail {
+  display: flex;
+  justify-content: space-between;
+
+  padding-bottom: 0.75rem;
+
+  border-bottom: 1px solid #eee;
+}
+
+.habit-detail-label {
+  color: #666;
+}
+
+.habit-detail-value {
+  font-weight: bold;
+}
+
+/* =========================================================
+   Error messages
+   ========================================================= */
+
+.error-message {
+  margin-top: 1.5rem;
+  padding: 1rem;
+
+  border: 1px solid #c0392b;
+  border-radius: 6px;
+
+  background: #fff5f5;
+}
+
+.error-message p {
+  margin-top: 0;
+}
