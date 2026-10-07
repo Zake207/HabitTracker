@@ -1,7 +1,7 @@
 /**
  * Units used to measure a habit's target.
  */
-export type measure_eng = 'pages' | 'minutes' | 'times' | 'amount'
+export type measure_eng = 'pages' | 'minutes' | 'times' | 'amount' | 'hours' | 'L' | 'Km'
 
 /**
  * Represents a habit managed by {@link HabitService}.

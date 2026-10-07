@@ -10,6 +10,10 @@ export class HabitTrackerService {
     habit_list.forEach((habit) => {
       this.registers.addEntry(habit.habitId)
     })
+    this.loadTrackedHabits()
+    // Falta tratar el caso en el que no se inicializa vacio
+    // por lo que hay que ver que pasa entre el localStorage
+    // y el map que se pasa como parámetro
   }
 
   insertTrackedHabit(
@@ -28,6 +32,7 @@ export class HabitTrackerService {
     }
     if (this.habits.insertHabit(new_habit)) {
       if (this.registers.addEntry(habit_id)) {
+        this.saveTrackedHabits()
         return true
       }
     }
@@ -37,6 +42,7 @@ export class HabitTrackerService {
   eraseTrackedHabit(habit_id: number): boolean {
     if (this.registers.dropEntry(habit_id)) {
       if (this.habits.eraseHabit(habit_id)) {
+        this.saveTrackedHabits()
         return true
       }
     }
@@ -77,6 +83,7 @@ export class HabitTrackerService {
       target_measure: new_target_measure,
     }
     if (this.habits.modifyHabit(habit_id, modified_habit)) {
+      this.saveTrackedHabits()
       return true
     }
     return false
