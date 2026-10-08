@@ -13,9 +13,6 @@ export class HabitTrackerService {
       this.registers.addEntry(habit.habitId)
     })
     this.loadTrackedRegisters()
-    // Falta tratar el caso en el que no se inicializa vacio
-    // por lo que hay que ver que pasa entre el localStorage
-    // y el map que se pasa como parámetro
   }
 
   insertTrackedHabit(
@@ -127,7 +124,7 @@ export class HabitTrackerService {
   }
 
   private saveTrackedRegisters() : void {
-    const registers = Array.from(this.registers.getRegisters().values())
+    const registers = this.getAllTrackedRegisters()
     localStorage.setItem('registers', JSON.stringify(registers))
   }
 
@@ -149,6 +146,7 @@ export class HabitTrackerService {
     }
     const registers: HabitRegister[] = JSON.parse(data)
     registers.forEach((register) => {
+      register.date = new Date(register.date)
       this.registers.insertRegister(register)
     })
   }
@@ -177,5 +175,6 @@ export class HabitTrackerService {
       this.saveTrackedRegisters()  
       return true
     }
+    return false
   }
 }
