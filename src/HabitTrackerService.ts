@@ -7,10 +7,12 @@ export class HabitTrackerService {
 
   constructor(habit_list: Map<number, Habit> = new Map<number, Habit>()) {
     this.habits = new HabitService(habit_list)
+
     this.loadTrackedHabits()
-    habit_list.forEach((habit) => {
+    this.habits.getHabits().forEach((habit) => {
       this.registers.addEntry(habit.habitId)
     })
+    this.loadTrackedRegisters()
     // Falta tratar el caso en el que no se inicializa vacio
     // por lo que hay que ver que pasa entre el localStorage
     // y el map que se pasa como parámetro
@@ -60,7 +62,10 @@ export class HabitTrackerService {
       completed: completed,
       realized: realized,
     }
-    return this.registers.insertRegister(new_register)
+    if (this.registers.insertRegister(new_register)) {
+      return true
+    }
+    return false
   }
 
   modifyTrackedHabit(
@@ -92,41 +97,38 @@ export class HabitTrackerService {
     return Array.from(this.habits.getHabits().values())
   }
 
-  getTodayTrackedRegister(habit_id: number): HabitRegister | undefined{
+  getTodayTrackedRegister(habit_id: number): HabitRegister | undefined {
     const today = new Date()
-    if (this.registers.searchRegister(habit_id, today).found) {
-      return this.registers.searchRegister(habit_id, today).register
+    const register = this.registers.searchRegister(habit_id, today)
+    if (register.found) {
+      return register.register
     }
   }
 
   /**
- * @description
- * Obtains all habit registrations corresponding to the current calendar day.
- *
- * @returns {HabitRegister[]} Habit registrations for the current day.
- */
-getTrackedRegisters(): HabitRegister[] {
-    const today = new Date()
+   * @description
+   * Obtains all habit registrations corresponding to the current calendar day.
+   *
+   * @returns {HabitRegister[]} Habit registrations for the current day.
+   */
+  getAllTrackedRegisters(): HabitRegister[] {
     const registers: HabitRegister[] = []
-
     this.registers.getRegisters().forEach((habitRegisters) => {
-        habitRegisters.forEach((register) => {
-            if (
-                register.date.getFullYear() === today.getFullYear() &&
-                register.date.getMonth() === today.getMonth() &&
-                register.date.getDate() === today.getDate()
-            ) {
-                registers.push(register)
-            }
-        })
+      habitRegisters.forEach((register) => {
+        registers.push(register)
+      })
     })
-
     return registers
-}
+  }
 
-  private saveTrackedHabits(): void {
+  private saveTrackedHabits() : void {
     const habits = Array.from(this.habits.getHabits().values())
     localStorage.setItem('habits', JSON.stringify(habits))
+  }
+
+  private saveTrackedRegisters() : void {
+    const registers = Array.from(this.registers.getRegisters().values())
+    localStorage.setItem('registers', JSON.stringify(registers))
   }
 
   private loadTrackedHabits(): void {
@@ -138,5 +140,42 @@ getTrackedRegisters(): HabitRegister[] {
     this.habits = new HabitService(
       new Map<number, Habit>(habits.map((habit) => [habit.habitId, habit]))
     )
+  }
+
+  private loadTrackedRegisters() : void {
+    const data = localStorage.getItem('registers')
+    if (data === null) {
+      return
+    }
+    const registers: HabitRegister[] = JSON.parse(data)
+    registers.forEach((register) => {
+      this.registers.insertRegister(register)
+    })
+  }
+
+  updateOrAddRegister(
+    habit_id: number,
+    date: Date,
+    completed: boolean,
+    realized: number
+  ): boolean {
+    const register = this.registers.searchRegister(habit_id, date)
+    if (register.found && register.register !== undefined) {
+      const modified_register: HabitRegister = {
+        habitId: habit_id,
+        date: date,
+        completed: completed,
+        realized: realized,
+      }
+      if (this.registers.modifyRegister(modified_register)) {
+        this.saveTrackedRegisters()
+        return true
+      }
+      return false
+    }
+    if (this.addRegister(habit_id, date, completed, realized)) {
+      this.saveTrackedRegisters()  
+      return true
+    }
   }
 }
