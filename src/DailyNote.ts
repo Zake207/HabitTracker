@@ -26,7 +26,7 @@ export class DailyNoteService {
     addNote(date: Date, note: string) : boolean {
         const selected_note = this.searchNote(date)
         if (selected_note != undefined) {
-            selected_note.notes += '\n' + note
+            selected_note.notes = note
             return true
         }
         else {

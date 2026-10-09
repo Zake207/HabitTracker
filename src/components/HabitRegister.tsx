@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 
+import '../styles/HabitRegister.css'
 import type { Habit } from '../HabitService.ts'
 import type { HabitRegister as HabitRegisterType } from '../HabitRegisterService.ts'
 import type { HabitTrackerService } from '../HabitTrackerService.ts'
@@ -166,52 +167,6 @@ return (
             )
           })}
         </ul>
-
-        <div className="debug-section">
-          <button
-            className="button button-ghost debug-toggle"
-            type="button"
-            onClick={handleShowRegisters}
-          >
-            {showRegisters ? 'Actualizar registros almacenados' : 'Mostrar registros almacenados'}
-          </button>
-
-          {showRegisters && (
-            <section className="stored-registers">
-              <h4>Registros almacenados</h4>
-
-              {registers.length === 0 ? (
-                <p className="empty-message">
-                  No hay registros almacenados.
-                </p>
-              ) : (
-                <ul className="stored-register-list">
-                  {registers.map((register, index) => (
-                    <li
-                      className="stored-register-item"
-                      key={`${register.habitId}-${register.date.getTime()}-${index}`}
-                    >
-                      <p>
-                        <strong>Hábito:</strong> {register.habitId}
-                      </p>
-                      <p>
-                        <strong>Fecha:</strong>{' '}
-                        {register.date.toLocaleDateString('es-ES')}
-                      </p>
-                      <p>
-                        <strong>Completado:</strong>{' '}
-                        {register.completed ? 'Sí' : 'No'}
-                      </p>
-                      <p>
-                        <strong>Realizado:</strong> {register.realized}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </section>
-          )}
-        </div>
       </section>
 
       {/* Panel de notas */}

@@ -304,52 +304,6 @@
   font-weight: 600;
 }
 
-/* ===== Depuración de registros ===== */
-
-.debug-section {
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--color-border);
-}
-
-.debug-toggle {
-  width: 100%;
-  white-space: normal;
-}
-
-.stored-registers {
-  margin-top: 1rem;
-}
-
-.stored-registers h4 {
-  margin: 0 0 0.75rem;
-  font-size: 0.95rem;
-}
-
-.stored-register-item {
-  padding: 0.75rem;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  overflow-wrap: anywhere;
-}
-
-.stored-register-item p {
-  margin: 0.25rem 0;
-  color: var(--color-muted);
-  font-size: 0.8rem;
-  line-height: 1.5;
-}
-
-.stored-register-item strong {
-  color: var(--color-text);
-}
-
-.empty-message {
-  color: var(--color-muted);
-  font-size: 0.875rem;
-  line-height: 1.5;
-}
-
 /* ===== Adaptación a pantallas estrechas ===== */
 
 @media (max-width: 850px) {

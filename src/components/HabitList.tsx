@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 
+import '../styles/HabitList.css'
 import type { Habit, measure_eng } from '../HabitService.ts'
 import type { HabitTrackerService } from '../HabitTrackerService.ts'
 
