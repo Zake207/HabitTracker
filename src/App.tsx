@@ -4,6 +4,7 @@ import HabitList from './components/HabitList.tsx'
 import Sidebar from './components/Sidebar'
 import { HabitRegister } from './components/HabitRegister.tsx'
 import { HabitMetrics } from './components/Metrics.tsx'
+import './styles/Styles.css'
 
 export type View = 'habits' | 'registers' | 'metrics'
 

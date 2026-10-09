@@ -1,5 +1,7 @@
 import type { View } from '../App.tsx'
 
+import '../styles/Sidebar.css'
+
 export interface SidebarProps {
   view: View
   setView: (view: View) => void
