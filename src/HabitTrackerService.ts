@@ -1,18 +1,20 @@
 import { HabitRegisterService, HabitRegister } from './HabitRegisterService'
 import { HabitService, Habit, measure_eng } from './HabitService'
+import { DailyNoteService, DailyNote } from './DailyNote'
 
 export class HabitTrackerService {
   private habits = new HabitService()
   private registers = new HabitRegisterService()
+  private notes = new DailyNoteService()
 
   constructor(habit_list: Map<number, Habit> = new Map<number, Habit>()) {
     this.habits = new HabitService(habit_list)
-
     this.loadTrackedHabits()
     this.habits.getHabits().forEach((habit) => {
       this.registers.addEntry(habit.habitId)
     })
     this.loadTrackedRegisters()
+    this.loadNotes()
   }
 
   insertTrackedHabit(
@@ -176,5 +178,17 @@ export class HabitTrackerService {
       return true
     }
     return false
+  }
+
+  getTodayNote(): DailyNote | undefined {
+    return this.notes.searchNote(new Date())
+  }
+
+  saveNotes() : void {
+
+  }
+
+  loadNotes() : void {
+
   }
 }
