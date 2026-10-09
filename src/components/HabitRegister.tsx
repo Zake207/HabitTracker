@@ -58,90 +58,205 @@ export function HabitRegister({ service }: HabitRegisterProps) {
     setShowRegisters(true)
   }
 
-  return (
-    <section>
-      <header>
-        <h2>{formattedDate}</h2>
-      </header>
-      <ul>
-        {habits.map((habit) => {
-          const todayRegister = service.getTodayTrackedRegister(habit.habitId)
+  // Notes related code
 
-          const realizedToday = todayRegister?.realized ?? 0
+  const [note, setNote] = useState(
+  service.getTodayNote()?.notes ?? ''
+)
 
-          return (
-            <li key={habit.habitId}>
-              <div>
-                <span>
-                  {habit.name} {realizedToday}
-                  {'/'}
-                  {habit.target}
-                  {habit.target_measure}{' '}
+const [noteSaved, setNoteSaved] = useState(false)
+
+  function handleSaveNote(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const saved = service.addNote(note)
+    setNoteSaved(saved)
+  }
+
+  
+return (
+  <main className="habit-tracker">
+    <header className="page-header">
+      <h2>{formattedDate}</h2>
+      <p>Tu seguimiento diario</p>
+    </header>
+
+    <div className="daily-panel">
+      {/* Panel de registros */}
+      <section className="panel register-panel">
+        <div className="panel-header">
+          <div>
+            <h3>Registros de hábitos</h3>
+            <p>Controla tu progreso de hoy.</p>
+          </div>
+        </div>
+
+        <ul className="habit-list">
+          {habits.map((habit) => {
+            const todayRegister = service.getTodayTrackedRegister(
+              habit.habitId
+            )
+
+            const realizedToday = todayRegister?.realized ?? 0
+
+            return (
+              <li className="habit-card" key={habit.habitId}>
+                <div className="habit-card-header">
+                  <div className="habit-info">
+                    <h4>{habit.name}</h4>
+                    <p className="habit-progress">
+                      <strong>{realizedToday}</strong>
+                      <span> / {habit.target} {habit.target_measure}</span>
+                    </p>
+                  </div>
+
                   <button
+                    className="button button-secondary"
                     type="button"
                     onClick={() => {
                       setSelectedHabit(habit.habitId)
-
                       setRealized(todayRegister?.realized ?? 0)
                     }}
                   >
-                    Track
+                    Registrar
                   </button>
-                  {selectedHabit === habit.habitId && (
-                    <form onSubmit={handleInsertRegister}>
-                      <p>Track of: {habit.name}</p>
+                </div>
 
-                      <label htmlFor={`register-realized-${habit.habitId}`}>
-                        Realized:
-                      </label>
+                {selectedHabit === habit.habitId && (
+                  <form
+                    className="register-form"
+                    onSubmit={handleInsertRegister}
+                  >
+                    <p className="form-description">
+                      Registrar progreso: {habit.name}
+                    </p>
 
-                      <input
-                        id={`register-realized-${habit.habitId}`}
-                        type="number"
-                        min="0"
-                        value={realized}
-                        onChange={(event) =>
-                          setRealized(Number(event.target.value))
-                        }
-                      />
+                    <label htmlFor={`register-realized-${habit.habitId}`}>
+                      Cantidad realizada
+                    </label>
 
-                      <button type="submit">Confirm</button>
-                    </form>
-                  )}
-                </span>
-              </div>
-            </li>
-          )
-        })}
-      </ul>
-      <button type="button" onClick={handleShowRegisters}>
-        Mostrar registros
-      </button>
-      {showRegisters && (
-        <section>
-          <h3>Registros almacenados</h3>
+                    <input
+                      className="form-input"
+                      id={`register-realized-${habit.habitId}`}
+                      type="number"
+                      min="0"
+                      step="any"
+                      value={realized}
+                      onChange={(event) =>
+                        setRealized(Number(event.target.value))
+                      }
+                    />
 
-          {registers.length === 0 ? (
-            <p>No hay registros almacenados.</p>
-          ) : (
-            <ul>
-              {registers.map((register, index) => (
-                <li key={index}>
-                  <strong>Habit ID:</strong> {register.habitId}
-                  {' | '}
-                  <strong>Fecha:</strong>{' '}
-                  {register.date.toLocaleDateString('es-ES')}
-                  {' | '}
-                  <strong>Completado:</strong>{' '}
-                  {register.completed ? 'Sí' : 'No'}
-                  {' | '}
-                  <strong>Realizado:</strong> {register.realized}
-                </li>
-              ))}
-            </ul>
+                    <div className="form-actions">
+                      <button className="button button-primary" type="submit">
+                        Confirmar
+                      </button>
+
+                      <button
+                        className="button button-ghost"
+                        type="button"
+                        onClick={() => setSelectedHabit(null)}
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </li>
+            )
+          })}
+        </ul>
+
+        <div className="debug-section">
+          <button
+            className="button button-ghost debug-toggle"
+            type="button"
+            onClick={handleShowRegisters}
+          >
+            {showRegisters ? 'Actualizar registros almacenados' : 'Mostrar registros almacenados'}
+          </button>
+
+          {showRegisters && (
+            <section className="stored-registers">
+              <h4>Registros almacenados</h4>
+
+              {registers.length === 0 ? (
+                <p className="empty-message">
+                  No hay registros almacenados.
+                </p>
+              ) : (
+                <ul className="stored-register-list">
+                  {registers.map((register, index) => (
+                    <li
+                      className="stored-register-item"
+                      key={`${register.habitId}-${register.date.getTime()}-${index}`}
+                    >
+                      <p>
+                        <strong>Hábito:</strong> {register.habitId}
+                      </p>
+                      <p>
+                        <strong>Fecha:</strong>{' '}
+                        {register.date.toLocaleDateString('es-ES')}
+                      </p>
+                      <p>
+                        <strong>Completado:</strong>{' '}
+                        {register.completed ? 'Sí' : 'No'}
+                      </p>
+                      <p>
+                        <strong>Realizado:</strong> {register.realized}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
           )}
-        </section>
-      )}
-    </section>
-  )
+        </div>
+      </section>
+
+      {/* Panel de notas */}
+      <section className="panel notes-panel">
+        <div className="panel-header">
+          <div>
+            <h3>Notas del día</h3>
+            <p>Guarda ideas, recordatorios y observaciones.</p>
+          </div>
+        </div>
+
+        <form className="notes-form" onSubmit={handleSaveNote}>
+          <label htmlFor="daily-note">Tu espacio personal</label>
+
+          <textarea
+            className="notes-textarea"
+            id="daily-note"
+            value={note}
+            onChange={(event) => {
+              setNote(event.target.value)
+              setNoteSaved(false)
+            }}
+            placeholder="¿Qué quieres recordar hoy?"
+            rows={12}
+          />
+
+          <div className="notes-footer">
+            <span className="notes-hint">
+              Las notas se guardan para el día actual.
+            </span>
+
+            <button className="button button-primary" type="submit">
+              Guardar nota
+            </button>
+          </div>
+
+          {noteSaved && (
+            <p className="save-message" role="status">
+              Nota guardada correctamente.
+            </p>
+          )}
+        </form>
+      </section>
+    </div>
+  </main>
+)
+
 }
