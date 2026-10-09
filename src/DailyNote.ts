@@ -14,14 +14,19 @@ export class DailyNoteService {
         return this.daily_notes
     }
 
-    searchNote(date: Date): DailyNote {
-        return this.daily_notes.find((note) => note.date == date)
+    searchNote(date: Date): DailyNote | undefined {
+            return this.daily_notes.find(
+        (note) =>
+            note.date.getFullYear() === date.getFullYear() &&
+            note.date.getMonth() === date.getMonth() &&
+            note.date.getDate() === date.getDate()
+        )
     }
 
-    addNote(date: Date, note: string) : boolean{
+    addNote(date: Date, note: string) : boolean {
         const selected_note = this.searchNote(date)
         if (selected_note != undefined) {
-            selected_note.notes.concat('\n + ' + note)
+            selected_note.notes += '\n' + note
             return true
         }
         else {
@@ -30,6 +35,7 @@ export class DailyNoteService {
                 notes: note
             }
             this.daily_notes.push(new_note)
+            return true
         }
     }
 

@@ -180,15 +180,47 @@ export class HabitTrackerService {
     return false
   }
 
+  // Notes related code
+
   getTodayNote(): DailyNote | undefined {
     return this.notes.searchNote(new Date())
   }
 
-  saveNotes() : void {
+/**
+ * @description
+ * Adds text to the note corresponding to the current day and persists it.
+ *
+ * @param {string} content - Text to append to today's note.
+ * @returns {boolean} True if the note was added successfully.
+ */
+addNote(content: string): boolean {
+    const result = this.notes.addNote(new Date(), content)
+    if (!result) {
+        return false
+    }
+    this.saveNotes()
+    return true
+}
 
+  saveNotes() : void {
+    const notes = this.notes.getNotes()
+    localStorage.setItem('notes', JSON.stringify(notes))
   }
 
   loadNotes() : void {
-
+    const data = localStorage.getItem('notes')
+    if (data === null) {
+      return
+    }
+    const stored_notes: DailyNote[] = JSON.parse(data)
+    const notes = new Array
+    stored_notes.forEach((note) => {
+      const n_note: DailyNote = {
+        date: new Date(note.date),
+        notes: note.notes
+      }
+      notes.push(n_note)
+    })
+    this.notes = new DailyNoteService(notes) 
   }
 }
