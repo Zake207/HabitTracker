@@ -1,9 +1,9 @@
 import { useState, type FormEvent } from 'react'
 
 import '../styles/HabitRegister.css'
-import type { Habit } from '../HabitService.ts'
-import type { HabitRegister as HabitRegisterType } from '../HabitRegisterService.ts'
-import type { HabitTrackerService } from '../HabitTrackerService.ts'
+import type { Habit } from '../logic/HabitService.ts'
+import type { HabitRegister as HabitRegisterType } from '../logic/HabitRegisterService.ts'
+import type { HabitTrackerService } from '../logic/HabitTrackerService.ts'
 
 interface HabitRegisterProps {
   service: HabitTrackerService

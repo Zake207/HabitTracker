@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { HabitTrackerService } from './HabitTrackerService.ts'
+import { HabitTrackerService } from './logic/HabitTrackerService.ts'
 import HabitList from './components/HabitList.tsx'
 import Sidebar from './components/Sidebar'
 import { HabitRegister } from './components/HabitRegister.tsx'
