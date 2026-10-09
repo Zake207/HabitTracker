@@ -16,9 +16,6 @@ export function HabitRegister({ service }: HabitRegisterProps) {
   const [selectedHabit, setSelectedHabit] = useState<number | null>(null)
   const [realized, setRealized] = useState(0)
 
-  const [showRegisters, setShowRegisters] = useState(false)
-  const [registers, setRegisters] = useState<HabitRegisterType[]>([])
-
   const formattedDate = today.toLocaleDateString('es-ES', {
     weekday: 'long',
     day: 'numeric',
@@ -45,18 +42,12 @@ export function HabitRegister({ service }: HabitRegisterProps) {
     )
 
     if (inserted) {
-      setRegisters(service.getAllTrackedRegisters())
       setRealized(0)
       setSelectedHabit(null)
     }
     else {
       setRealized(-1)
     }
-  }
-
-  function handleShowRegisters() {
-    setRegisters(service.getAllTrackedRegisters())
-    setShowRegisters(true)
   }
 
   // Notes related code
