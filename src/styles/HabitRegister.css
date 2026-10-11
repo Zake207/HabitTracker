@@ -1,4 +1,3 @@
-
 /* ===== Página principal ===== */
 
 .habit-tracker {
@@ -17,7 +16,12 @@
   padding: 2rem;
   background: var(--color-background);
   color: var(--color-text);
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
     sans-serif;
 }
 
@@ -112,7 +116,9 @@
   border: 1px solid var(--color-border);
   border-radius: 12px;
   background: var(--color-surface);
-  transition: border-color 150ms ease, background-color 150ms ease;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease;
 }
 
 .habit-card:hover {

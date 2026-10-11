@@ -2,7 +2,7 @@ import { expect, it, describe, beforeEach } from 'vitest'
 import {
   HabitRegister,
   HabitRegisterService,
-} from '../src/HabitRegisterService'
+} from '../src/logic/HabitRegisterService'
 
 describe('HabitRegisterService', () => {
   // Registros válidos

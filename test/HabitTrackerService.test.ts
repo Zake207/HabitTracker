@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import * as service from '../src/HabitTrackerService'
+import * as service from '../src/logic/HabitTrackerService'
 
 describe('HabitTrackerService', () => {
   it('loads its exported API', () => {

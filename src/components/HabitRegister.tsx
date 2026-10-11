@@ -44,19 +44,16 @@ export function HabitRegister({ service }: HabitRegisterProps) {
     if (inserted) {
       setRealized(0)
       setSelectedHabit(null)
-    }
-    else {
+    } else {
       setRealized(-1)
     }
   }
 
   // Notes related code
 
-  const [note, setNote] = useState(
-  service.getTodayNote()?.notes ?? ''
-)
+  const [note, setNote] = useState(service.getTodayNote()?.notes ?? '')
 
-const [noteSaved, setNoteSaved] = useState(false)
+  const [noteSaved, setNoteSaved] = useState(false)
 
   function handleSaveNote(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -65,144 +62,145 @@ const [noteSaved, setNoteSaved] = useState(false)
     setNoteSaved(saved)
   }
 
-  
-return (
-  <main className="habit-tracker">
-    <header className="page-header">
-      <h2>{formattedDate}</h2>
-      <p>Tu seguimiento diario</p>
-    </header>
+  return (
+    <main className="habit-tracker">
+      <header className="page-header">
+        <h2>{formattedDate}</h2>
+        <p>Tu seguimiento diario</p>
+      </header>
 
-    <div className="daily-panel">
-      {/* Panel de registros */}
-      <section className="panel register-panel">
-        <div className="panel-header">
-          <div>
-            <h3>Registros de hábitos</h3>
-            <p>Controla tu progreso de hoy.</p>
+      <div className="daily-panel">
+        {/* Panel de registros */}
+        <section className="panel register-panel">
+          <div className="panel-header">
+            <div>
+              <h3>Registros de hábitos</h3>
+              <p>Controla tu progreso de hoy.</p>
+            </div>
           </div>
-        </div>
 
-        <ul className="habit-list">
-          {habits.map((habit) => {
-            const todayRegister = service.getTodayTrackedRegister(
-              habit.habitId
-            )
+          <ul className="habit-list">
+            {habits.map((habit) => {
+              const todayRegister = service.getTodayTrackedRegister(
+                habit.habitId
+              )
 
-            const realizedToday = todayRegister?.realized ?? 0
+              const realizedToday = todayRegister?.realized ?? 0
 
-            return (
-              <li className="habit-card" key={habit.habitId}>
-                <div className="habit-card-header">
-                  <div className="habit-info">
-                    <h4>{habit.name}</h4>
-                    <p className="habit-progress">
-                      <strong>{realizedToday}</strong>
-                      <span> / {habit.target} {habit.target_measure}</span>
-                    </p>
+              return (
+                <li className="habit-card" key={habit.habitId}>
+                  <div className="habit-card-header">
+                    <div className="habit-info">
+                      <h4>{habit.name}</h4>
+                      <p className="habit-progress">
+                        <strong>{realizedToday}</strong>
+                        <span>
+                          {' '}
+                          / {habit.target} {habit.target_measure}
+                        </span>
+                      </p>
+                    </div>
+
+                    <button
+                      className="button button-secondary"
+                      type="button"
+                      onClick={() => {
+                        setSelectedHabit(habit.habitId)
+                        setRealized(todayRegister?.realized ?? 0)
+                      }}
+                    >
+                      Registrar
+                    </button>
                   </div>
 
-                  <button
-                    className="button button-secondary"
-                    type="button"
-                    onClick={() => {
-                      setSelectedHabit(habit.habitId)
-                      setRealized(todayRegister?.realized ?? 0)
-                    }}
-                  >
-                    Registrar
-                  </button>
-                </div>
+                  {selectedHabit === habit.habitId && (
+                    <form
+                      className="register-form"
+                      onSubmit={handleInsertRegister}
+                    >
+                      <p className="form-description">
+                        Registrar progreso: {habit.name}
+                      </p>
 
-                {selectedHabit === habit.habitId && (
-                  <form
-                    className="register-form"
-                    onSubmit={handleInsertRegister}
-                  >
-                    <p className="form-description">
-                      Registrar progreso: {habit.name}
-                    </p>
+                      <label htmlFor={`register-realized-${habit.habitId}`}>
+                        Cantidad realizada
+                      </label>
 
-                    <label htmlFor={`register-realized-${habit.habitId}`}>
-                      Cantidad realizada
-                    </label>
+                      <input
+                        className="form-input"
+                        id={`register-realized-${habit.habitId}`}
+                        type="number"
+                        min="0"
+                        step="any"
+                        value={realized}
+                        onChange={(event) =>
+                          setRealized(Number(event.target.value))
+                        }
+                      />
 
-                    <input
-                      className="form-input"
-                      id={`register-realized-${habit.habitId}`}
-                      type="number"
-                      min="0"
-                      step="any"
-                      value={realized}
-                      onChange={(event) =>
-                        setRealized(Number(event.target.value))
-                      }
-                    />
+                      <div className="form-actions">
+                        <button className="button button-primary" type="submit">
+                          Confirmar
+                        </button>
 
-                    <div className="form-actions">
-                      <button className="button button-primary" type="submit">
-                        Confirmar
-                      </button>
+                        <button
+                          className="button button-ghost"
+                          type="button"
+                          onClick={() => setSelectedHabit(null)}
+                        >
+                          Cancelar
+                        </button>
+                      </div>
+                    </form>
+                  )}
+                </li>
+              )
+            })}
+          </ul>
+        </section>
 
-                      <button
-                        className="button button-ghost"
-                        type="button"
-                        onClick={() => setSelectedHabit(null)}
-                      >
-                        Cancelar
-                      </button>
-                    </div>
-                  </form>
-                )}
-              </li>
-            )
-          })}
-        </ul>
-      </section>
-
-      {/* Panel de notas */}
-      <section className="panel notes-panel">
-        <div className="panel-header">
-          <div>
-            <h3>Notas del día</h3>
-            <p>Guarda ideas, recordatorios y observaciones.</p>
-          </div>
-        </div>
-
-        <form className="notes-form" onSubmit={handleSaveNote}>
-          <label htmlFor="daily-note">Tu espacio personal</label>
-
-          <textarea
-            className="notes-textarea"
-            id="daily-note"
-            value={note}
-            onChange={(event) => {
-              setNote(event.target.value)
-              setNoteSaved(false)
-            }}
-            placeholder="¿Qué quieres recordar hoy?"
-            rows={12}
-          />
-
-          <div className="notes-footer">
-            <span className="notes-hint">
-              Las notas se guardan para el día actual.
-            </span>
-
-            <button className="button button-primary" type="submit">
-              Guardar nota
-            </button>
+        {/* Panel de notas */}
+        <section className="panel notes-panel">
+          <div className="panel-header">
+            <div>
+              <h3>Notas del día</h3>
+              <p>Guarda ideas, recordatorios y observaciones.</p>
+            </div>
           </div>
 
-          {noteSaved && (
-            <p className="save-message" role="status">
-              Nota guardada correctamente.
-            </p>
-          )}
-        </form>
-      </section>
-    </div>
-  </main>
-)
+          <form className="notes-form" onSubmit={handleSaveNote}>
+            <label htmlFor="daily-note">Tu espacio personal</label>
 
+            <textarea
+              className="notes-textarea"
+              id="daily-note"
+              value={note}
+              onChange={(event) => {
+                setNote(event.target.value)
+                setNoteSaved(false)
+              }}
+              placeholder="¿Qué quieres recordar hoy?"
+              rows={12}
+            />
+
+            <div className="notes-footer">
+              <span className="notes-hint">
+                Las notas se guardan para el día actual.
+              </span>
+
+              <button className="button button-primary" type="submit">
+                Guardar nota
+              </button>
+            </div>
+
+            {noteSaved && (
+              <p className="save-message" role="status">
+                Nota guardada correctamente.
+              </p>
+            )}
+          </form>
+        </section>
+      </div>
+    </main>
+  )
 }

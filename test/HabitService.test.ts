@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { Habit, HabitService } from '../src/HabitService'
+import { Habit, HabitService } from '../src/logic/HabitService'
 
 describe('HabitService', () => {
   const service: HabitService = new HabitService()

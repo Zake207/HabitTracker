@@ -125,12 +125,12 @@ export class HabitTrackerService {
     return registers
   }
 
-  private saveTrackedHabits() : void {
+  private saveTrackedHabits(): void {
     const habits = Array.from(this.habits.getHabits().values())
     localStorage.setItem('habits', JSON.stringify(habits))
   }
 
-  private saveTrackedRegisters() : void {
+  private saveTrackedRegisters(): void {
     const registers = this.getAllTrackedRegisters()
     localStorage.setItem('registers', JSON.stringify(registers))
   }
@@ -146,7 +146,7 @@ export class HabitTrackerService {
     )
   }
 
-  private loadTrackedRegisters() : void {
+  private loadTrackedRegisters(): void {
     const data = localStorage.getItem('registers')
     if (data === null) {
       return
@@ -179,7 +179,7 @@ export class HabitTrackerService {
       return false
     }
     if (this.addRegister(habit_id, date, completed, realized)) {
-      this.saveTrackedRegisters()  
+      this.saveTrackedRegisters()
       return true
     }
     return false
@@ -191,41 +191,41 @@ export class HabitTrackerService {
     return this.notes.searchNote(new Date())
   }
 
-/**
- * @description
- * Adds text to the note corresponding to the current day and persists it.
- *
- * @param {string} content - Text to append to today's note.
- * @returns {boolean} True if the note was added successfully.
- */
-addNote(content: string): boolean {
+  /**
+   * @description
+   * Adds text to the note corresponding to the current day and persists it.
+   *
+   * @param {string} content - Text to append to today's note.
+   * @returns {boolean} True if the note was added successfully.
+   */
+  addNote(content: string): boolean {
     const result = this.notes.addNote(new Date(), content)
     if (!result) {
-        return false
+      return false
     }
     this.saveNotes()
     return true
-}
+  }
 
-  saveNotes() : void {
+  saveNotes(): void {
     const notes = this.notes.getNotes()
     localStorage.setItem('notes', JSON.stringify(notes))
   }
 
-  loadNotes() : void {
+  loadNotes(): void {
     const data = localStorage.getItem('notes')
     if (data === null) {
       return
     }
     const stored_notes: DailyNote[] = JSON.parse(data)
-    const notes = new Array
+    const notes = new Array()
     stored_notes.forEach((note) => {
       const n_note: DailyNote = {
         date: new Date(note.date),
-        notes: note.notes
+        notes: note.notes,
       }
       notes.push(n_note)
     })
-    this.notes = new DailyNoteService(notes) 
+    this.notes = new DailyNoteService(notes)
   }
 }
