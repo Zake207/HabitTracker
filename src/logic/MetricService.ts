@@ -17,7 +17,7 @@ export interface Metric {
  * @param date - Date to normalize.
  * @returns The date key without time information.
  */
-function getDayKey(date: Date): string {
+export function getDayKey(date: Date): string {
   const year = date.getFullYear()
   const month = String(date.getMonth() + 1).padStart(2, '0')
   const day = String(date.getDate()).padStart(2, '0')
