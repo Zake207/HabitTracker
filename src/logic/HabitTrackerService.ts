@@ -55,10 +55,15 @@ export class HabitTrackerService {
     completed: boolean,
     realized: number
   ): boolean {
+    const target = this.habits.getHabits().get(habit_id)?.target
+    if (target === undefined) {
+      return false
+    }
+
     const new_register: HabitRegister = {
       habitId: habit_id,
       date: date,
-      completed: completed,
+      completed: completed && realized >= target,
       realized: realized,
     }
     if (this.registers.insertRegister(new_register)) {
