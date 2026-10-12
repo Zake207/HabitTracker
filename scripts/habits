@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Ruta absoluta del repositorio HabitTracker.
+PROJECT_DIR="$HOME/Repositories/HabitTracker"
+
+# Comprobar que la ruta corresponde al proyecto.
+if [[ ! -f "$PROJECT_DIR/package.json" ]]; then
+    echo "Error: no se encuentra package.json en $PROJECT_DIR"
+    exit 1
+fi
+
+# Comprobar que npm está disponible.
+if ! command -v npm >/dev/null 2>&1; then
+    echo "Error: npm no está instalado o no está disponible en PATH."
+    exit 1
+fi
+
+# Instalar dependencias si todavía no existen.
+if [[ ! -d "$PROJECT_DIR/node_modules" ]]; then
+    echo "No se encuentran las dependencias. Ejecutando npm install..."
+    cd "$PROJECT_DIR"
+    npm install
+fi
+
+# Arrancar HabitTracker desde la raíz del proyecto.
+cd "$PROJECT_DIR"
+exec npm run dev -- --open
+
