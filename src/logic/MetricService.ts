@@ -35,32 +35,30 @@ export function getDayKey(date: Date): string {
  * @param referenceDate - Date used as the final day of the period.
  * @returns Daily metrics ordered chronologically.
  */
+
 export function getDailyMetrics(
   habits: readonly Habit[],
   registers: readonly HabitRegister[],
-  numberOfDays = 30,
   referenceDate = new Date()
 ): Metric[] {
-  if (!Number.isInteger(numberOfDays) || numberOfDays <= 0) {
-    throw new Error('numberOfDays must be a positive integer')
-  }
-
   const targets = new Map(habits.map((habit) => [habit.habitId, habit.target]))
 
   const metricsByDay = new Map<string, Metric>()
 
-  const lastDay = new Date(
+  const firstDay = new Date(
     referenceDate.getFullYear(),
     referenceDate.getMonth(),
-    referenceDate.getDate()
+    1
   )
 
-  for (let offset = numberOfDays - 1; offset >= 0; offset--) {
-    const date = new Date(
-      lastDay.getFullYear(),
-      lastDay.getMonth(),
-      lastDay.getDate() - offset
-    )
+  const lastDay = new Date(
+    referenceDate.getFullYear(),
+    referenceDate.getMonth() + 1,
+    0
+  )
+
+  for (let day = 1; day <= lastDay.getDate(); day++) {
+    const date = new Date(firstDay.getFullYear(), firstDay.getMonth(), day)
 
     metricsByDay.set(getDayKey(date), {
       date,

@@ -84,8 +84,8 @@
   flex: 1;
   min-height: 100px;
   display: grid;
-  grid-template-columns: repeat(30, minmax(0, 1fr));
-  gap: 4px;
+  grid-template-columns: repeat(31, minmax(0, 1fr));
+  gap: 2px;
   align-items: stretch;
   border-bottom: 1px solid #dfe3e9;
 }
@@ -96,6 +96,19 @@
   grid-template-rows: minmax(0, 1fr) 22px;
   gap: 6px;
 }
+
+
+.activity-chart__day--today {
+  background: #eaf1fb;
+  outline: 2px solid #4b82c3;
+  outline-offset: -2px;
+}
+
+.activity-chart__day--today .activity-chart__date {
+  color: #234f86;
+  font-weight: 700;
+}
+
 
 .activity-chart__bar-group {
   min-height: 0;

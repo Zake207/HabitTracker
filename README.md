@@ -1,4 +1,5 @@
 # Habit Tracker
+
 ## Instalación y puesta en marcha
 
 Esta sección explica cómo instalar, iniciar y utilizar HabitTracker en un entorno Linux.
@@ -18,6 +19,7 @@ git --version
 node --version
 npm --version
 ```
+
 Si alguno de estos comandos no está disponible, instala la herramienta correspondiente antes de continuar.
 
 ### 2. Descargar el repositorio
@@ -154,5 +156,3 @@ Ten en cuenta que el almacenamiento local no equivale a una copia de seguridad: 
 - **El puerto 5173 está ocupado:** cierra la aplicación que lo está utilizando antes de iniciar HabitTracker.
 - **El navegador no se abre automáticamente:** comprueba la salida de la terminal y abre manualmente `http://localhost:5173`.
 - **No aparecen los datos guardados:** comprueba que estás utilizando la misma dirección, el mismo perfil de navegador y que no se han borrado los datos del sitio.
-
-
