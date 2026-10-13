@@ -14,7 +14,7 @@ export function HabitRegister({ service }: HabitRegisterProps) {
 
   const [habits] = useState<Habit[]>(service.getTrackedHabits())
   const [selectedHabit, setSelectedHabit] = useState<number | null>(null)
-  const [realized, setRealized] = useState(0)
+  const [realized, setRealized] = useState('')
 
   const formattedDate = today.toLocaleDateString('es-ES', {
     weekday: 'long',
@@ -31,8 +31,8 @@ export function HabitRegister({ service }: HabitRegisterProps) {
     const register: HabitRegisterType = {
       habitId: selectedHabit,
       date: today,
-      completed: realized > 0,
-      realized: realized,
+      completed: Number(realized) > 0,
+      realized: Number(realized),
     }
     const inserted = service.updateOrAddRegister(
       register.habitId,
@@ -42,10 +42,10 @@ export function HabitRegister({ service }: HabitRegisterProps) {
     )
 
     if (inserted) {
-      setRealized(0)
+      setRealized('')
       setSelectedHabit(null)
     } else {
-      setRealized(-1)
+      setRealized('')
     }
   }
 
@@ -106,7 +106,7 @@ export function HabitRegister({ service }: HabitRegisterProps) {
                       type="button"
                       onClick={() => {
                         setSelectedHabit(habit.habitId)
-                        setRealized(todayRegister?.realized ?? 0)
+                        setRealized(String(todayRegister?.realized ?? 0))
                       }}
                     >
                       Registrar
@@ -129,12 +129,12 @@ export function HabitRegister({ service }: HabitRegisterProps) {
                       <input
                         className="form-input"
                         id={`register-realized-${habit.habitId}`}
-                        type="number"
+                        type="string"
                         min="0"
                         step="any"
                         value={realized}
                         onChange={(event) =>
-                          setRealized(Number(event.target.value))
+                          setRealized(event.target.value)
                         }
                       />
 

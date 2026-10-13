@@ -16,25 +16,25 @@ function HabitList({ service }: HabitListProps) {
   const [errorInsertHabit, setErrorInsertHabit] = useState(false)
   const [showInsertHabit, setShowFormInsertHabit] = useState(false)
 
-  const [id, setId] = useState(0)
+  const [id, setId] = useState('')
   const [name, setName] = useState('')
-  const [freq, setFreq] = useState(0)
-  const [tar, setTar] = useState(0)
+  const [freq, setFreq] = useState('')
+  const [tar, setTar] = useState('')
   const [tarm, setTarm] = useState<measure_eng>('amount')
 
   const [errorModifyHabit, setErrorModifyHabit] = useState(false)
   const [showModifyHabit, setShowFormModifyHabit] = useState(false)
 
   const [n_name, setNewName] = useState('')
-  const [n_freq, setNewFreq] = useState(0)
-  const [n_tar, setNewTar] = useState(0)
+  const [n_freq, setNewFreq] = useState('')
+  const [n_tar, setNewTar] = useState('')
   const [n_tarm, setNewTarm] = useState<measure_eng>('amount')
 
   function resetFormInsertHabit() {
-    setId(0)
+    setId('')
     setName('')
-    setFreq(0)
-    setTar(0)
+    setFreq('')
+    setTar('')
     setTarm('times')
     setShowFormInsertHabit(true)
   }
@@ -45,8 +45,8 @@ function HabitList({ service }: HabitListProps) {
     }
 
     setNewName(selectedHabit.name)
-    setNewFreq(selectedHabit.frequency)
-    setNewTar(selectedHabit.target)
+    setNewFreq(String(selectedHabit.frequency))
+    setNewTar(String(selectedHabit.target))
     setNewTarm(selectedHabit.target_measure)
     setShowFormModifyHabit(true)
   }
@@ -54,7 +54,7 @@ function HabitList({ service }: HabitListProps) {
   function handleInsertHabit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    if (!service.insertTrackedHabit(id, name, freq, tar, tarm)) {
+    if (!service.insertTrackedHabit(Number(id), name, Number(freq), Number(tar), tarm)) {
       resetFormInsertHabit()
       setErrorInsertHabit(true)
       setShowFormInsertHabit(false)
@@ -77,8 +77,8 @@ function HabitList({ service }: HabitListProps) {
       !service.modifyTrackedHabit(
         selectedHabit.habitId,
         n_name,
-        n_freq,
-        n_tar,
+        Number(n_freq),
+        Number(n_tar),
         n_tarm
       )
     ) {
@@ -150,7 +150,7 @@ function HabitList({ service }: HabitListProps) {
                 id="habit-id"
                 type="number"
                 value={id}
-                onChange={(event) => setId(Number(event.target.value))}
+                onChange={(event) => setId(event.target.value)}
               />
             </div>
 
@@ -169,8 +169,10 @@ function HabitList({ service }: HabitListProps) {
               <input
                 id="habit-frequency"
                 type="number"
+                min={0}
+                max={7}
                 value={freq}
-                onChange={(event) => setFreq(Number(event.target.value))}
+                onChange={(event) => setFreq(event.target.value)}
               />
             </div>
 
@@ -180,7 +182,7 @@ function HabitList({ service }: HabitListProps) {
                 id="habit-target"
                 type="number"
                 value={tar}
-                onChange={(event) => setTar(Number(event.target.value))}
+                onChange={(event) => setTar(event.target.value)}
               />
             </div>
 
@@ -270,8 +272,9 @@ function HabitList({ service }: HabitListProps) {
                   <input
                     id="modify-frequency"
                     type="number"
+                    max={7}
                     value={n_freq}
-                    onChange={(event) => setNewFreq(Number(event.target.value))}
+                    onChange={(event) => setNewFreq(event.target.value)}
                   />
                 </div>
 
@@ -281,7 +284,7 @@ function HabitList({ service }: HabitListProps) {
                     id="modify-target"
                     type="number"
                     value={n_tar}
-                    onChange={(event) => setNewTar(Number(event.target.value))}
+                    onChange={(event) => setNewTar(event.target.value)}
                   />
                 </div>
 
