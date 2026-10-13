@@ -1,14 +1,66 @@
+
 /* =========================================================
-   Habit list
+   NEON / SYNTHWAVE — HABIT LIST
+   ========================================================= */
+
+:root {
+  --color-background: #17152d;
+  --color-surface: #25203d;
+  --color-surface-hover: #302447;
+
+  --color-neon-pink: #ff2d95;
+  --color-neon-rose: #ff5478;
+  --color-neon-cyan: #42ddf5;
+  --color-neon-yellow: #ffe83d;
+
+  --color-text: #f2efff;
+  --color-text-muted: #aaa4c7;
+  --color-border: #443454;
+  --color-danger: #ff647c;
+
+  --shadow-pink: 0 0 12px rgb(255 45 149 / 18%);
+  --shadow-cyan: 0 0 12px rgb(66 221 245 / 14%);
+}
+
+/* =========================================================
+   HABIT LIST
    ========================================================= */
 
 .habit-list {
   flex: 1;
   min-width: 0;
   width: 100%;
-  max-width: 1000px;
+  max-width: none;
+  min-height: 100vh;
+  box-sizing: border-box;
   padding: 2rem;
-  color: #273329;
+  color: var(--color-text);
+
+  background-color: var(--color-background);
+  background-image:
+    radial-gradient(
+      circle,
+      rgb(190 210 255 / 25%) 1px,
+      transparent 1.5px
+    ),
+    radial-gradient(
+      circle,
+      rgb(130 160 255 / 14%) 1px,
+      transparent 1.5px
+    );
+  background-size: 97px 113px, 157px 139px;
+  background-position: 13px 21px, 57px 73px;
+  background-attachment: fixed;
+}
+
+.habit-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .habit-list-header {
@@ -17,22 +69,37 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-bottom: 1.75rem;
+  margin-bottom: 2rem;
+  padding: 0 1.5rem;
 }
 
 .habit-list-title {
   margin: 0;
-  color: #273329;
-  font-size: clamp(1.5rem, 2vw, 2rem);
-  font-weight: 700;
-  letter-spacing: -0.035em;
+  color: var(--color-text);
+  font-size: clamp(2rem, 3vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  text-shadow:
+    0 0 10px rgb(255 45 149 / 25%),
+    0 0 24px rgb(255 45 149 / 10%);
+}
+
+/* =========================================================
+   HABIT CARDS
+   ========================================================= */
+
+.habits {
+  width: 100%;
+  max-width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
 .habits {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -43,11 +110,12 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 1rem 1.25rem;
-  border: 1px solid #e1e5de;
+  border: 1px solid var(--color-border);
   border-radius: 12px;
-  background: #ffffff;
-  color: #273329;
+  background: rgb(37 32 61 / 94%);
+  color: var(--color-text);
   cursor: pointer;
+
   transition:
     transform 150ms ease,
     border-color 150ms ease,
@@ -57,8 +125,14 @@
 
 .habit-item:hover {
   transform: translateY(-2px);
-  border-color: #c4d0c1;
-  box-shadow: 0 4px 12px rgb(35 50 35 / 6%);
+  border-color: rgb(255 45 149 / 65%);
+  background: var(--color-surface-hover);
+  box-shadow: var(--shadow-pink);
+}
+
+.habit-item:focus-visible {
+  outline: 2px solid var(--color-neon-cyan);
+  outline-offset: 3px;
 }
 
 .habit-item-info {
@@ -69,24 +143,32 @@
 }
 
 .habit-item-name {
-  color: #273329;
+  color: var(--color-text);
   font-weight: 650;
   overflow-wrap: anywhere;
 }
 
 .habit-item-id {
-  color: #737d73;
+  color: var(--color-text-muted);
   font-size: 0.8rem;
 }
 
 .habit-item-arrow {
   flex-shrink: 0;
-  color: #737d73;
+  color: var(--color-neon-cyan);
   font-size: 1.25rem;
+  transition:
+    color 150ms ease,
+    transform 150ms ease;
+}
+
+.habit-item:hover .habit-item-arrow {
+  color: var(--color-neon-pink);
+  transform: translateX(3px);
 }
 
 /* =========================================================
-   Buttons
+   BUTTONS
    ========================================================= */
 
 .primary-button,
@@ -99,66 +181,80 @@
   padding: 0.65rem 1rem;
   border: 1px solid transparent;
   border-radius: 9px;
+  font: inherit;
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.2;
+  cursor: pointer;
+
   transition:
     background-color 150ms ease,
     border-color 150ms ease,
-    color 150ms ease;
+    color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
 }
 
 .primary-button {
-  border-color: #526b55;
-  background: #526b55;
-  color: #ffffff;
+  border-color: var(--color-neon-pink);
+  background: var(--color-neon-pink);
+  color: #171020;
+  box-shadow: 0 0 8px rgb(255 45 149 / 14%);
 }
 
 .primary-button:hover:not(:disabled) {
-  border-color: #405543;
-  background: #405543;
+  border-color: var(--color-neon-rose);
+  background: var(--color-neon-rose);
+  box-shadow: 0 0 15px rgb(255 45 149 / 30%);
 }
 
 .secondary-button {
-  border-color: #e1e5de;
-  background: #ffffff;
-  color: #526b55;
+  border-color: var(--color-neon-cyan);
+  background: transparent;
+  color: var(--color-neon-cyan);
 }
 
 .secondary-button:hover:not(:disabled) {
-  border-color: #526b55;
-  background: #edf1e9;
+  background: rgb(66 221 245 / 10%);
+  box-shadow: var(--shadow-cyan);
 }
 
 .danger-button {
-  border-color: #c85b50;
-  background: #ffffff;
-  color: #b64238;
+  border-color: var(--color-danger);
+  background: transparent;
+  color: var(--color-danger);
 }
 
 .danger-button:hover:not(:disabled) {
-  border-color: #b64238;
-  background: #b64238;
-  color: #ffffff;
+  background: var(--color-danger);
+  color: #1c1024;
+  box-shadow: 0 0 12px rgb(255 100 124 / 24%);
+}
+
+.primary-button:active:not(:disabled),
+.secondary-button:active:not(:disabled),
+.danger-button:active:not(:disabled) {
+  transform: translateY(1px);
 }
 
 .primary-button:focus-visible,
 .secondary-button:focus-visible,
 .danger-button:focus-visible,
 .sidebar-button:focus-visible {
-  outline: 3px solid rgb(82 107 85 / 25%);
-  outline-offset: 2px;
+  outline: 2px solid var(--color-neon-cyan);
+  outline-offset: 3px;
 }
 
 .primary-button:disabled,
 .secondary-button:disabled,
 .danger-button:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 /* =========================================================
-   Modals
+   MODALS
    ========================================================= */
 
 .modal-overlay {
@@ -169,8 +265,8 @@
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  background: rgb(25 35 26 / 45%);
-  backdrop-filter: blur(3px);
+  background: rgb(12 9 25 / 78%);
+  backdrop-filter: blur(5px);
 }
 
 .modal,
@@ -179,25 +275,29 @@
   max-width: 500px;
   max-height: calc(100vh - 2rem);
   overflow-y: auto;
+  box-sizing: border-box;
   padding: 2rem;
-  border: 1px solid #e1e5de;
+  border: 1px solid var(--color-border);
   border-radius: 16px;
-  background: #ffffff;
-  color: #273329;
-  box-shadow: 0 10px 30px rgb(35 50 35 / 12%);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow:
+    0 0 20px rgb(255 45 149 / 10%),
+    0 15px 45px rgb(0 0 0 / 35%);
 }
 
 .modal-title {
   margin-top: 0;
   margin-bottom: 1.5rem;
-  color: #273329;
+  color: var(--color-text);
   font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: -0.025em;
+  text-shadow: 0 0 10px rgb(255 45 149 / 16%);
 }
 
 /* =========================================================
-   Forms
+   FORMS
    ========================================================= */
 
 .form-group {
@@ -208,7 +308,7 @@
 }
 
 .form-group label {
-  color: #273329;
+  color: var(--color-text-muted);
   font-size: 0.875rem;
   font-weight: 600;
 }
@@ -216,20 +316,31 @@
 .form-group input {
   width: 100%;
   min-height: 42px;
+  box-sizing: border-box;
   padding: 0.65rem 0.75rem;
-  border: 1px solid #e1e5de;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   outline: none;
-  background: #ffffff;
-  color: #273329;
+  background: #1c1933;
+  color: var(--color-text);
+  font: inherit;
+
   transition:
     border-color 150ms ease,
     box-shadow 150ms ease;
 }
 
+.form-group input::placeholder {
+  color: #817a9f;
+}
+
 .form-group input:focus {
-  border-color: #526b55;
-  box-shadow: 0 0 0 3px rgb(82 107 85 / 12%);
+  border-color: var(--color-neon-cyan);
+  box-shadow: var(--shadow-cyan);
+}
+
+.form-group input:focus-visible {
+  outline: none;
 }
 
 .modal-actions {
@@ -243,18 +354,18 @@
 .modify-form {
   margin-top: 2rem;
   padding-top: 1.5rem;
-  border-top: 1px solid #e1e5de;
+  border-top: 1px solid var(--color-border);
 }
 
 .modify-form h3 {
   margin-top: 0;
-  color: #273329;
+  color: var(--color-neon-cyan);
   font-size: 1.05rem;
   font-weight: 700;
 }
 
 /* =========================================================
-   Habit details
+   HABIT DETAILS
    ========================================================= */
 
 .habit-details {
@@ -270,31 +381,31 @@
   flex-wrap: wrap;
   gap: 0.5rem 1rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid #e1e5de;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .habit-detail-label {
-  color: #737d73;
+  color: var(--color-text-muted);
   font-size: 0.9rem;
 }
 
 .habit-detail-value {
-  color: #273329;
+  color: var(--color-text);
   font-weight: 650;
   overflow-wrap: anywhere;
 }
 
 /* =========================================================
-   Error messages
+   ERROR MESSAGES
    ========================================================= */
 
 .error-message {
   margin-top: 1.5rem;
   padding: 1rem;
-  border: 1px solid #e6b8b4;
+  border: 1px solid rgb(255 100 124 / 50%);
   border-radius: 10px;
-  background: #fff5f3;
-  color: #873b34;
+  background: rgb(255 100 124 / 8%);
+  color: #ff9baa;
 }
 
 .error-message p {
@@ -302,7 +413,7 @@
 }
 
 /* =========================================================
-   Responsive layout
+   RESPONSIVE LAYOUT
    ========================================================= */
 
 @media (max-width: 850px) {
@@ -325,7 +436,7 @@
     min-height: auto;
     padding: 1rem;
     border-right: none;
-    border-bottom: 1px solid #e1e5de;
+    border-bottom: 1px solid var(--color-border);
   }
 
   .sidebar-title {
@@ -366,5 +477,19 @@
 
   .modal-actions button {
     width: 100%;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .habit-item,
+  .habit-item-arrow,
+  .primary-button,
+  .secondary-button,
+  .danger-button {
+    transition: none;
   }
 }

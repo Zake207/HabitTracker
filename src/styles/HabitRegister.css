@@ -1,20 +1,39 @@
-/* ===== Página principal ===== */
+
+/* =========================================================
+   HABIT TRACKER — NEON / SYNTHWAVE
+   ========================================================= */
 
 .habit-tracker {
-  --color-primary: #526b55;
-  --color-primary-hover: #405543;
-  --color-background: #f5f6f2;
-  --color-surface: #ffffff;
-  --color-border: #e1e5de;
-  --color-text: #273329;
-  --color-muted: #737d73;
-  --color-soft: #edf1e9;
+  --color-primary: #ff2d95;
+  --color-primary-hover: #ff5478;
+  --color-background: #17152d;
+  --color-surface: #25203d;
+  --color-border: #443454;
+  --color-text: #f2efff;
+  --color-muted: #aaa4c7;
+  --color-soft: #302447;
+  --color-cyan: #42ddf5;
+  --color-yellow: #ffe83d;
 
   box-sizing: border-box;
   width: 100%;
   min-height: 100%;
   padding: 2rem;
-  background: var(--color-background);
+  background-color: var(--color-background);
+  background-image:
+    radial-gradient(
+      circle,
+      rgb(190 210 255 / 25%) 1px,
+      transparent 1.5px
+    ),
+    radial-gradient(
+      circle,
+      rgb(130 160 255 / 14%) 1px,
+      transparent 1.5px
+    );
+  background-size: 97px 113px, 157px 139px;
+  background-position: 13px 21px, 57px 73px;
+  background-attachment: fixed;
   color: var(--color-text);
   font-family:
     Inter,
@@ -37,7 +56,9 @@
   font: inherit;
 }
 
-/* ===== Cabecera ===== */
+/* =========================================================
+   CABECERA
+   ========================================================= */
 
 .page-header {
   margin-bottom: 1.75rem;
@@ -45,19 +66,24 @@
 
 .page-header h2 {
   margin: 0;
-  font-size: clamp(1.5rem, 2vw, 2rem);
-  font-weight: 700;
-  letter-spacing: -0.035em;
+  color: var(--color-text);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
   text-transform: capitalize;
+  text-shadow: 0 0 14px rgb(255 45 149 / 22%);
 }
 
 .page-header p {
-  margin: 0.5rem 0 0;
+  margin: 0.65rem 0 0;
   color: var(--color-muted);
   font-size: 0.95rem;
+  line-height: 1.6;
 }
 
-/* ===== Distribución de los paneles ===== */
+/* =========================================================
+   DISTRIBUCIÓN DE LOS PANELES
+   ========================================================= */
 
 .daily-panel {
   display: grid;
@@ -68,11 +94,13 @@
 
 .panel {
   min-width: 0;
+  height: fit-content;
+  align-self: start;
   padding: 1.5rem;
   border: 1px solid var(--color-border);
   border-radius: 16px;
-  background: var(--color-surface);
-  box-shadow: 0 3px 12px rgb(35 50 35 / 4%);
+  background: rgb(37 32 61 / 94%);
+  color: var(--color-text);
 }
 
 .panel-header {
@@ -87,6 +115,7 @@
 
 .panel-header h3 {
   margin: 0;
+  color: var(--color-text);
   font-size: 1.15rem;
   font-weight: 700;
 }
@@ -98,8 +127,9 @@
   line-height: 1.5;
 }
 
-/* ===== Lista de hábitos ===== */
-
+/* =========================================================
+   LISTA DE HÁBITOS Y REGISTROS GUARDADOS
+   ========================================================= */
 .habit-list,
 .stored-register-list {
   display: flex;
@@ -108,6 +138,8 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  height: auto;
+  min-height: 0;
 }
 
 .habit-card {
@@ -115,14 +147,19 @@
   padding: 1rem;
   border: 1px solid var(--color-border);
   border-radius: 12px;
-  background: var(--color-surface);
+  background: rgb(37 32 61 / 94%);
+  color: var(--color-text);
+
   transition:
     border-color 150ms ease,
-    background-color 150ms ease;
+    background-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .habit-card:hover {
-  border-color: #c4d0c1;
+  border-color: rgb(66 221 245 / 55%);
+  background: var(--color-soft);
+  box-shadow: 0 0 10px rgb(66 221 245 / 8%);
 }
 
 .habit-card-header {
@@ -139,6 +176,7 @@
 .habit-info h4 {
   margin: 0;
   overflow-wrap: anywhere;
+  color: var(--color-text);
   font-size: 0.98rem;
   font-weight: 650;
 }
@@ -154,12 +192,14 @@
 }
 
 .habit-progress strong {
-  color: var(--color-primary);
+  color: var(--color-neon-pink, #ff2d95);
   font-size: 1.1rem;
   font-variant-numeric: tabular-nums;
 }
 
-/* ===== Botones ===== */
+/* =========================================================
+   BOTONES
+   ========================================================= */
 
 .button {
   display: inline-flex;
@@ -174,37 +214,42 @@
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.2;
+
   transition:
     background-color 150ms ease,
     border-color 150ms ease,
-    color 150ms ease;
+    color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
 }
 
 .button:focus-visible {
-  outline: 3px solid rgb(82 107 85 / 25%);
-  outline-offset: 2px;
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 3px;
 }
 
 .button-primary {
   border-color: var(--color-primary);
   background: var(--color-primary);
-  color: white;
+  color: #171020;
+  box-shadow: 0 0 8px rgb(255 45 149 / 14%);
 }
 
-.button-primary:hover {
+.button-primary:hover:not(:disabled) {
   border-color: var(--color-primary-hover);
   background: var(--color-primary-hover);
+  box-shadow: 0 0 15px rgb(255 45 149 / 25%);
 }
 
 .button-secondary {
-  border-color: var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-primary);
+  border-color: var(--color-cyan);
+  background: transparent;
+  color: var(--color-cyan);
 }
 
-.button-secondary:hover {
-  border-color: var(--color-primary);
-  background: var(--color-soft);
+.button-secondary:hover:not(:disabled) {
+  background: rgb(66 221 245 / 10%);
+  box-shadow: 0 0 12px rgb(66 221 245 / 12%);
 }
 
 .button-ghost {
@@ -213,11 +258,21 @@
   color: var(--color-text);
 }
 
-.button-ghost:hover {
-  background: var(--color-soft);
+.button-ghost:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  background: rgb(255 45 149 / 7%);
+  color: var(--color-primary);
 }
 
-/* ===== Formulario de registro ===== */
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* =========================================================
+   FORMULARIO DE REGISTRO
+   ========================================================= */
 
 .register-form {
   display: flex;
@@ -239,6 +294,7 @@
   margin: 0;
   color: var(--color-muted);
   font-size: 0.875rem;
+  line-height: 1.5;
 }
 
 .form-input {
@@ -247,14 +303,23 @@
   padding: 0.65rem 0.75rem;
   border: 1px solid var(--color-border);
   border-radius: 8px;
-  background: var(--color-surface);
+  background: #1c1933;
   color: var(--color-text);
+
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.form-input::placeholder {
+  color: #817a9f;
 }
 
 .form-input:focus,
 .notes-textarea:focus {
-  border-color: var(--color-primary);
-  outline: 3px solid rgb(82 107 85 / 12%);
+  border-color: var(--color-cyan);
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(66 221 245 / 10%);
 }
 
 .form-actions {
@@ -263,7 +328,9 @@
   gap: 0.6rem;
 }
 
-/* ===== Tablón de notas ===== */
+/* =========================================================
+   TABLÓN DE NOTAS
+   ========================================================= */
 
 .notes-form {
   display: flex;
@@ -278,15 +345,19 @@
   padding: 1rem;
   border: 1px solid var(--color-border);
   border-radius: 10px;
-  background: #fdfefb;
+  background: #1c1933;
   color: var(--color-text);
   font-size: 0.925rem;
   line-height: 1.7;
   resize: vertical;
+
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .notes-textarea::placeholder {
-  color: #969e95;
+  color: #817a9f;
 }
 
 .notes-footer {
@@ -305,12 +376,15 @@
 
 .save-message {
   margin: 0;
-  color: var(--color-primary);
+  color: var(--color-cyan);
   font-size: 0.875rem;
   font-weight: 600;
+  text-shadow: 0 0 8px rgb(66 221 245 / 12%);
 }
 
-/* ===== Adaptación a pantallas estrechas ===== */
+/* =========================================================
+   ADAPTACIÓN A PANTALLAS ESTRECHAS
+   ========================================================= */
 
 @media (max-width: 850px) {
   .habit-tracker {
@@ -352,5 +426,16 @@
 
   .notes-footer .button {
     width: 100%;
+  }
+}
+
+/* =========================================================
+   MOVIMIENTO REDUCIDO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .habit-card,
+  .button {
+    transition: none;
   }
 }

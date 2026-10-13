@@ -119,13 +119,18 @@ function HabitList({ service }: HabitListProps) {
   return (
     <section className="habit-list">
       <header className="habit-list-header">
-        <h2 className="habit-list-title">My Habits</h2>
+        <div className="habit-header">
+            <div>
+              <h3>Mis hábitos</h3>
+              <p>Controla tu progreso de hoy.</p>
+            </div>
+          </div>
 
         <button
           className="primary-button"
           onClick={() => setShowFormInsertHabit(true)}
         >
-          Add Habit
+          Añadir hábito
         </button>
       </header>
 
@@ -150,7 +155,7 @@ function HabitList({ service }: HabitListProps) {
       {showInsertHabit && (
         <div className="modal-overlay">
           <form className="modal" onSubmit={handleInsertHabit}>
-            <h2 className="modal-title">New Habit</h2>
+            <h2 className="modal-title">Nuevo hábito</h2>
 
             <div className="form-group">
               <label htmlFor="habit-id">Id</label>
@@ -163,7 +168,7 @@ function HabitList({ service }: HabitListProps) {
             </div>
 
             <div className="form-group">
-              <label htmlFor="habit-name">Name</label>
+              <label htmlFor="habit-name">Nombre</label>
               <input
                 id="habit-name"
                 type="text"
@@ -173,7 +178,7 @@ function HabitList({ service }: HabitListProps) {
             </div>
 
             <div className="form-group">
-              <label htmlFor="habit-frequency">Frequency</label>
+              <label htmlFor="habit-frequency">Objetivo semanal</label>
               <input
                 id="habit-frequency"
                 type="number"
@@ -185,7 +190,7 @@ function HabitList({ service }: HabitListProps) {
             </div>
 
             <div className="form-group">
-              <label htmlFor="habit-target">Target</label>
+              <label htmlFor="habit-target">Objetivo diario</label>
               <input
                 id="habit-target"
                 type="number"
@@ -195,7 +200,7 @@ function HabitList({ service }: HabitListProps) {
             </div>
 
             <div className="form-group">
-              <label htmlFor="habit-target-measure">Target Measure</label>
+              <label htmlFor="habit-target-measure">Medida</label>
               <input
                 id="habit-target-measure"
                 type="text"
@@ -224,9 +229,9 @@ function HabitList({ service }: HabitListProps) {
       {errorInsertHabit && (
         <div className="modal-overlay">
           <div className="error-modal">
-            <h2 className="modal-title">Insertion Error</h2>
+            <h2 className="modal-title">Error de inserción</h2>
 
-            <p>Error during the insertion, check the parameters.</p>
+            <p>Error en la inserción, los parametros no siguen los estándares.</p>
 
             <button
               className="primary-button"
@@ -245,7 +250,7 @@ function HabitList({ service }: HabitListProps) {
 
             <div className="habit-details">
               <div className="habit-detail">
-                <span className="habit-detail-label">Frequency</span>
+                <span className="habit-detail-label">Objetivo semanal</span>
 
                 <span className="habit-detail-value">
                   {selectedHabit.frequency}
@@ -253,7 +258,7 @@ function HabitList({ service }: HabitListProps) {
               </div>
 
               <div className="habit-detail">
-                <span className="habit-detail-label">Target</span>
+                <span className="habit-detail-label">Objetivo diario</span>
 
                 <span className="habit-detail-value">
                   {selectedHabit.target} {selectedHabit.target_measure}
@@ -263,10 +268,10 @@ function HabitList({ service }: HabitListProps) {
 
             {showModifyHabit && (
               <form className="modify-form" onSubmit={handleModifyHabit}>
-                <h3>Modify Habit</h3>
+                <h3>Mdificar hábito</h3>
 
                 <div className="form-group">
-                  <label htmlFor="modify-name">Name</label>
+                  <label htmlFor="modify-name">Nombre</label>
                   <input
                     id="modify-name"
                     type="text"
@@ -276,7 +281,7 @@ function HabitList({ service }: HabitListProps) {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="modify-frequency">Frequency</label>
+                  <label htmlFor="modify-frequency">Objetivo semanal</label>
                   <input
                     id="modify-frequency"
                     type="number"
@@ -287,7 +292,7 @@ function HabitList({ service }: HabitListProps) {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="modify-target">Target</label>
+                  <label htmlFor="modify-target">Objetivo diario</label>
                   <input
                     id="modify-target"
                     type="number"
@@ -297,7 +302,7 @@ function HabitList({ service }: HabitListProps) {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="modify-target-measure">Target Measure</label>
+                  <label htmlFor="modify-target-measure">Medida</label>
                   <input
                     id="modify-target-measure"
                     type="text"
@@ -310,7 +315,7 @@ function HabitList({ service }: HabitListProps) {
 
                 <div className="modal-actions">
                   <button className="primary-button" type="submit">
-                    Save
+                    Guardar
                   </button>
                 </div>
               </form>
@@ -318,7 +323,7 @@ function HabitList({ service }: HabitListProps) {
 
             {errorModifyHabit && (
               <div className="error-message">
-                <p>Error during the modification, check the parameters.</p>
+                <p>Error en la modificación, parámetros no siguen los estándares.</p>
 
                 <button
                   className="primary-button"
@@ -332,12 +337,12 @@ function HabitList({ service }: HabitListProps) {
             <div className="modal-actions">
               {!showModifyHabit && (
                 <button className="primary-button" onClick={setFormModifyHabit}>
-                  Modify
+                  Modificar
                 </button>
               )}
 
               <button className="danger-button" onClick={handleDeleteHabit}>
-                Delete
+                Borrar
               </button>
 
               <button
