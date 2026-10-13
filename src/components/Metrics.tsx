@@ -113,6 +113,31 @@ function HabitDetail({
         registers.length
       : 0
 
+  const weeksWithFrequency = (() => {
+    const weeklyCounts = new Map<string, number>()
+
+    for (const register of registers) {
+      const weekStart = new Date(register.date)
+      weekStart.setHours(0, 0, 0, 0)
+
+      // La semana comienza el lunes.
+      const daysSinceMonday = (weekStart.getDay() + 6) % 7
+      weekStart.setDate(weekStart.getDate() - daysSinceMonday)
+
+      const weekKey = [
+        weekStart.getFullYear(),
+        String(weekStart.getMonth() + 1).padStart(2, '0'),
+        String(weekStart.getDate()).padStart(2, '0'),
+      ].join('-')
+
+      weeklyCounts.set(weekKey, (weeklyCounts.get(weekKey) ?? 0) + 1)
+    }
+
+    return [...weeklyCounts.values()].filter(
+      (count) => count >= habit.frequency
+    ).length
+  })()
+
   const recentRegisters = useMemo(() => {
     const today = new Date()
     const firstDay = new Date(
@@ -164,6 +189,11 @@ function HabitDetail({
           <strong>{averageRealized.toFixed(1)}</strong>
         </article>
       </div>
+
+      <article className="metric-card">
+        <span>Semanas con frecuencia alcanzada</span>
+        <strong>{weeksWithFrequency}</strong>
+      </article>
 
       <section className="habit-evolution">
         <h3>Realización reciente</h3>

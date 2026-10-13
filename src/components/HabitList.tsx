@@ -54,7 +54,15 @@ function HabitList({ service }: HabitListProps) {
   function handleInsertHabit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    if (!service.insertTrackedHabit(Number(id), name, Number(freq), Number(tar), tarm)) {
+    if (
+      !service.insertTrackedHabit(
+        Number(id),
+        name,
+        Number(freq),
+        Number(tar),
+        tarm
+      )
+    ) {
       resetFormInsertHabit()
       setErrorInsertHabit(true)
       setShowFormInsertHabit(false)

@@ -133,9 +133,7 @@ export function HabitRegister({ service }: HabitRegisterProps) {
                         min="0"
                         step="any"
                         value={realized}
-                        onChange={(event) =>
-                          setRealized(event.target.value)
-                        }
+                        onChange={(event) => setRealized(event.target.value)}
                       />
 
                       <div className="form-actions">
