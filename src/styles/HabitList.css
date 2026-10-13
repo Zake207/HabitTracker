@@ -1,9 +1,9 @@
-
 /* =========================================================
    NEON / SYNTHWAVE — HABIT LIST
    ========================================================= */
 
 :root {
+  /* Variables propias de este archivo */
   --color-background: #17152d;
   --color-surface: #25203d;
   --color-surface-hover: #302447;
@@ -20,6 +20,15 @@
 
   --shadow-pink: 0 0 12px rgb(255 45 149 / 18%);
   --shadow-cyan: 0 0 12px rgb(66 221 245 / 14%);
+
+  /* Alias con los nombres del modelo, para compartir paleta
+     con el resto de hojas de estilo */
+  --color-primary: var(--color-neon-pink);
+  --color-primary-hover: var(--color-neon-rose);
+  --color-muted: var(--color-text-muted);
+  --color-soft: var(--color-surface-hover);
+  --color-cyan: var(--color-neon-cyan);
+  --color-yellow: var(--color-neon-yellow);
 }
 
 /* =========================================================
@@ -35,6 +44,13 @@
   box-sizing: border-box;
   padding: 2rem;
   color: var(--color-text);
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
 
   background-color: var(--color-background);
   background-image:
@@ -69,37 +85,32 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
   padding: 0 1.5rem;
 }
 
 .habit-list-title {
   margin: 0;
   color: var(--color-text);
-  font-size: clamp(2rem, 3vw, 2.75rem);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
   font-weight: 800;
   letter-spacing: -0.04em;
-  text-shadow:
-    0 0 10px rgb(255 45 149 / 25%),
-    0 0 24px rgb(255 45 149 / 10%);
+  text-shadow: 0 0 14px rgb(255 45 149 / 22%);
 }
 
 /* =========================================================
-   HABIT CARDS
+   TARJETAS DE HÁBITOS
    ========================================================= */
-
-.habits {
-  width: 100%;
-  max-width: 850px;
-  margin-left: auto;
-  margin-right: auto;
-  box-sizing: border-box;
-}
 
 .habits {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
+  width: 100%;
+  max-width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
   padding: 0;
   list-style: none;
 }
@@ -109,7 +120,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1rem 1.25rem;
+  padding: 1rem;
   border: 1px solid var(--color-border);
   border-radius: 12px;
   background: rgb(37 32 61 / 94%);
@@ -117,17 +128,15 @@
   cursor: pointer;
 
   transition:
-    transform 150ms ease,
     border-color 150ms ease,
     background-color 150ms ease,
     box-shadow 150ms ease;
 }
 
 .habit-item:hover {
-  transform: translateY(-2px);
-  border-color: rgb(255 45 149 / 65%);
+  border-color: rgb(66 221 245 / 55%);
   background: var(--color-surface-hover);
-  box-shadow: var(--shadow-pink);
+  box-shadow: 0 0 10px rgb(66 221 245 / 8%);
 }
 
 .habit-item:focus-visible {
@@ -144,6 +153,7 @@
 
 .habit-item-name {
   color: var(--color-text);
+  font-size: 0.98rem;
   font-weight: 650;
   overflow-wrap: anywhere;
 }
@@ -157,28 +167,26 @@
   flex-shrink: 0;
   color: var(--color-neon-cyan);
   font-size: 1.25rem;
-  transition:
-    color 150ms ease,
-    transform 150ms ease;
+  transition: color 150ms ease;
 }
 
 .habit-item:hover .habit-item-arrow {
   color: var(--color-neon-pink);
-  transform: translateX(3px);
 }
 
 /* =========================================================
-   BUTTONS
+   BOTONES
    ========================================================= */
 
 .primary-button,
 .secondary-button,
 .danger-button {
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
   min-height: 40px;
-  padding: 0.65rem 1rem;
+  padding: 0.6rem 1rem;
   border: 1px solid transparent;
   border-radius: 9px;
   font: inherit;
@@ -191,8 +199,7 @@
     background-color 150ms ease,
     border-color 150ms ease,
     color 150ms ease,
-    box-shadow 150ms ease,
-    transform 150ms ease;
+    box-shadow 150ms ease;
 }
 
 .primary-button {
@@ -205,7 +212,7 @@
 .primary-button:hover:not(:disabled) {
   border-color: var(--color-neon-rose);
   background: var(--color-neon-rose);
-  box-shadow: 0 0 15px rgb(255 45 149 / 30%);
+  box-shadow: 0 0 15px rgb(255 45 149 / 25%);
 }
 
 .secondary-button {
@@ -216,7 +223,7 @@
 
 .secondary-button:hover:not(:disabled) {
   background: rgb(66 221 245 / 10%);
-  box-shadow: var(--shadow-cyan);
+  box-shadow: 0 0 12px rgb(66 221 245 / 12%);
 }
 
 .danger-button {
@@ -226,15 +233,8 @@
 }
 
 .danger-button:hover:not(:disabled) {
-  background: var(--color-danger);
-  color: #1c1024;
-  box-shadow: 0 0 12px rgb(255 100 124 / 24%);
-}
-
-.primary-button:active:not(:disabled),
-.secondary-button:active:not(:disabled),
-.danger-button:active:not(:disabled) {
-  transform: translateY(1px);
+  background: rgb(255 100 124 / 10%);
+  box-shadow: 0 0 12px rgb(255 100 124 / 14%);
 }
 
 .primary-button:focus-visible,
@@ -254,7 +254,7 @@
 }
 
 /* =========================================================
-   MODALS
+   MODALES
    ========================================================= */
 
 .modal-overlay {
@@ -276,28 +276,28 @@
   max-height: calc(100vh - 2rem);
   overflow-y: auto;
   box-sizing: border-box;
-  padding: 2rem;
+  padding: 1.5rem;
   border: 1px solid var(--color-border);
   border-radius: 16px;
-  background: var(--color-surface);
+  background: rgb(37 32 61 / 94%);
   color: var(--color-text);
   box-shadow:
-    0 0 20px rgb(255 45 149 / 10%),
+    0 0 20px rgb(255 45 149 / 8%),
     0 15px 45px rgb(0 0 0 / 35%);
 }
 
 .modal-title {
   margin-top: 0;
   margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
   color: var(--color-text);
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  letter-spacing: -0.025em;
-  text-shadow: 0 0 10px rgb(255 45 149 / 16%);
 }
 
 /* =========================================================
-   FORMS
+   FORMULARIOS
    ========================================================= */
 
 .form-group {
@@ -308,7 +308,7 @@
 }
 
 .form-group label {
-  color: var(--color-text-muted);
+  color: var(--color-text);
   font-size: 0.875rem;
   font-weight: 600;
 }
@@ -336,7 +336,7 @@
 
 .form-group input:focus {
   border-color: var(--color-neon-cyan);
-  box-shadow: var(--shadow-cyan);
+  box-shadow: 0 0 0 3px rgb(66 221 245 / 10%);
 }
 
 .form-group input:focus-visible {
@@ -347,25 +347,25 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 0.75rem;
+  gap: 0.6rem;
   margin-top: 1.5rem;
 }
 
 .modify-form {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   padding-top: 1.5rem;
   border-top: 1px solid var(--color-border);
 }
 
 .modify-form h3 {
   margin-top: 0;
-  color: var(--color-neon-cyan);
-  font-size: 1.05rem;
+  color: var(--color-text);
+  font-size: 1.15rem;
   font-weight: 700;
 }
 
 /* =========================================================
-   HABIT DETAILS
+   DETALLES DEL HÁBITO
    ========================================================= */
 
 .habit-details {
@@ -386,7 +386,7 @@
 
 .habit-detail-label {
   color: var(--color-text-muted);
-  font-size: 0.9rem;
+  font-size: 0.875rem;
 }
 
 .habit-detail-value {
@@ -396,16 +396,18 @@
 }
 
 /* =========================================================
-   ERROR MESSAGES
+   MENSAJES DE ERROR
    ========================================================= */
 
 .error-message {
   margin-top: 1.5rem;
   padding: 1rem;
   border: 1px solid rgb(255 100 124 / 50%);
-  border-radius: 10px;
+  border-radius: 12px;
   background: rgb(255 100 124 / 8%);
   color: #ff9baa;
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 
 .error-message p {
@@ -413,7 +415,7 @@
 }
 
 /* =========================================================
-   RESPONSIVE LAYOUT
+   ADAPTACIÓN A PANTALLAS ESTRECHAS
    ========================================================= */
 
 @media (max-width: 850px) {
@@ -454,7 +456,7 @@
   }
 
   .habit-list {
-    padding: 1rem;
+    padding: 0.85rem;
   }
 
   .habit-list-header {
@@ -462,12 +464,12 @@
   }
 
   .habit-item {
-    padding: 0.85rem;
+    padding: 0.8rem;
   }
 
   .modal,
   .error-modal {
-    padding: 1.25rem;
+    padding: 1rem;
     border-radius: 12px;
   }
 
@@ -481,7 +483,7 @@
 }
 
 /* =========================================================
-   REDUCED MOTION
+   MOVIMIENTO REDUCIDO
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
@@ -489,7 +491,8 @@
   .habit-item-arrow,
   .primary-button,
   .secondary-button,
-  .danger-button {
+  .danger-button,
+  .form-group input {
     transition: none;
   }
 }

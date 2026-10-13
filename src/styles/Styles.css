@@ -1,5 +1,7 @@
 /* =========================================================
-   Global
+   GLOBAL — NEON / SYNTHWAVE
+   Aquí no existen las variables de .habit-tracker, así que
+   se usan los valores del modelo directamente.
    ========================================================= */
 
 *,
@@ -10,6 +12,23 @@
 
 body {
   margin: 0;
+  background-color: #17152d;
+  background-image:
+    radial-gradient(
+      circle,
+      rgb(190 210 255 / 25%) 1px,
+      transparent 1.5px
+    ),
+    radial-gradient(
+      circle,
+      rgb(130 160 255 / 14%) 1px,
+      transparent 1.5px
+    );
+  background-size: 97px 113px, 157px 139px;
+  background-position: 13px 21px, 57px 73px;
+  background-attachment: fixed;
+  color: #f2efff;
+  color-scheme: dark;
   font-family:
     Inter,
     system-ui,
@@ -17,8 +36,6 @@ body {
     BlinkMacSystemFont,
     'Segoe UI',
     sans-serif;
-  background: #f5f6f2;
-  color: #273329;
 }
 
 button,
@@ -31,7 +48,7 @@ button {
 }
 
 /* =========================================================
-   Application layout
+   DISTRIBUCIÓN DE LA APLICACIÓN
    ========================================================= */
 
 .app {
