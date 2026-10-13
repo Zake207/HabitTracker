@@ -24,11 +24,17 @@ function getCompletedRegisters(
     .length
 }
 
+
 function ActivityChart({ metrics }: { metrics: Metric[] }) {
   const maxValue = Math.max(
     1,
-    ...metrics.map((metric) => metric.totalRegisters)
+    ...metrics.map((metric) => metric.completedRegisters),
   )
+
+  const chartWidth = 1000
+  const chartTop = 30
+  const chartBottom = 200
+  const chartHeight = chartBottom - chartTop
 
   function isToday(date: Date): boolean {
     const today = new Date()
@@ -40,60 +46,96 @@ function ActivityChart({ metrics }: { metrics: Metric[] }) {
     )
   }
 
-  function isWeekStart(date: Date): boolean {
-    return date.getDay() === 1
+  function getX(index: number): number {
+    if (metrics.length <= 1) return chartWidth / 2
+
+    return (index / (metrics.length - 1)) * chartWidth
   }
+
+  function getY(value: number): number {
+    return chartBottom - (value / maxValue) * chartHeight
+  }
+
+  const points = metrics
+    .map(
+      (metric, index) =>
+        `${getX(index)},${getY(metric.completedRegisters)}`,
+    )
+    .join(' ')
 
   return (
     <div className="activity-chart">
-      <div className="activity-chart__legend">
-        <span>
-          <i className="legend-dot legend-dot--total" />
-          Total de registros
-        </span>
-        <span>
-          <i className="legend-dot legend-dot--completed" />
-          Objetivo alcanzado
-        </span>
-      </div>
 
       <div
-        className="activity-chart__bars"
+        className="activity-chart__plot"
         role="img"
-        aria-label="Registros diarios totales y registros que alcanzan el objetivo"
+        aria-label="Gráfico lineal de objetivos de hábitos alcanzados cada día del mes"
       >
+        <svg
+          className="activity-chart__svg"
+          viewBox={`0 0 ${chartWidth} 220`}
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          {[0, 1, 2, 3, 4].map((step) => {
+            const y = chartTop + (chartHeight / 4) * step
+
+            return (
+              <line
+                key={step}
+                x1="0"
+                y1={y}
+                x2={chartWidth}
+                y2={y}
+                className="activity-chart__gridline"
+              />
+            )
+          })}
+
+          <polyline
+            points={points}
+            className="activity-chart__line"
+          />
+
+          {metrics.map((metric, index) => (
+            <circle
+              key={metric.date.toISOString()}
+              cx={getX(index)}
+              cy={getY(metric.completedRegisters)}
+              r={isToday(metric.date) ? 7 : 4}
+              className={
+                isToday(metric.date)
+                  ? 'activity-chart__point activity-chart__point--today'
+                  : 'activity-chart__point'
+              }
+            >
+              <title>
+                {`${formatDate(metric.date)}: ${metric.completedRegisters} objetivos alcanzados`}
+              </title>
+            </circle>
+          ))}
+        </svg>
+      </div>
+
+      <div className="activity-chart__dates">
         {metrics.map((metric) => (
           <div
-            className={`activity-chart__day ${
-              isToday(metric.date) ? 'activity-chart__day--today' : ''
-            }`}
             key={metric.date.toISOString()}
-            title={`${formatDate(metric.date)}: ${metric.totalRegisters} registros, ${metric.completedRegisters} objetivos alcanzados`}
+            className={
+              isToday(metric.date)
+                ? 'activity-chart__date activity-chart__date--today'
+                : 'activity-chart__date'
+            }
+            title={formatDate(metric.date)}
           >
-            <div className="activity-chart__bar-group">
-              <div
-                className="activity-bar activity-bar--total"
-                style={{
-                  height: `${(metric.totalRegisters / maxValue) * 100}%`,
-                }}
-              />
-              <div
-                className="activity-bar activity-bar--completed"
-                style={{
-                  height: `${(metric.completedRegisters / maxValue) * 100}%`,
-                }}
-              />
-            </div>
-
-            <span className="activity-chart__date">
-              {formatDate(metric.date)}
-            </span>
+            {metric.date.getDate()}
           </div>
         ))}
       </div>
     </div>
   )
 }
+
 
 function HabitDetail({
   habit,
